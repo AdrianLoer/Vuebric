@@ -3,12 +3,16 @@
     <canvas ref="renderCanvas"></canvas>
     <!-- All child <template> elements get added in here -->
     <!-- <img src="../assets/blob.png"> -->
-    <f-image
+    <!-- <f-image
       v-for="blob in blobs"
       :image-path="require('../assets/blob.png')"
       :left="blob.x"
       :top="blob.y"
-    ></f-image>
+    ></f-image> -->
+    <f-rect
+    :left="100"
+    :top="100">
+    </f-rect>
     <slot></slot>
   </div>
 </template>
@@ -16,10 +20,12 @@
 import Vue from 'vue';
 import {fabric} from 'fabric'
 import FImage from './FImage';
+import FRect from './FRect';
 
 export default {
   components: {
-    FImage
+    FImage,
+    FRect,
   },
   data() {
     return {
@@ -27,6 +33,7 @@ export default {
       FabricWrapper: {
         // Expose PIXI and the created app to all descendants.
         fabricApp: null,
+        ready: false,
       },
       // Expose the event bus to all descendants so they can listen for the app-ready event.
       EventBus: new Vue(),
@@ -46,6 +53,7 @@ export default {
   },
 
   mounted() {
+
     // Determine the width and height of the renderer wrapper element.
     const renderCanvas = this.$refs.renderCanvas;
     const w = renderCanvas.offsetWidth;
@@ -122,7 +130,7 @@ export default {
         prevTime = time;
         frames = 0;
 
-        console.log("FPS: " + fps + "/" + myfps)
+        // console.log("FPS: " + fps + "/" + myfps)
       }
       // self.imagePos.x = self.imagePos.x + 1
       fabric.util.requestAnimFrame(animate);
@@ -137,6 +145,7 @@ export default {
     //   backgroundColor: 0x1099bb
     // });
     this.EventBus.$emit('ready');
+    this.FabricWrapper.ready = true;
   }
 }
 </script>

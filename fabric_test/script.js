@@ -1,5 +1,5 @@
 (function() {
-  var total = 1000,
+  var total = 2000,
     blobs = new Array(total),
     myfps = 60,
     updateTime = 1000 / myfps,
