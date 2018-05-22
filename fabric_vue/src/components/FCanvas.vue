@@ -18,6 +18,14 @@
       :fill="selectionBoundingBoxRect.fill"
     >
     </f-rect>
+    <f-rect
+      :left="Math.max(selectionBoundingBoxRect.left + 10, 0)"
+      :top="Math.max(selectionBoundingBoxRect.top + 10, 0)"
+      :width="Math.max(selectionBoundingBoxRect.width - 20, 0)"
+      :height="Math.max(selectionBoundingBoxRect.height - 20, 0)"
+      :fill="'green'"
+    >
+    </f-rect>
     <slot></slot>
   </div>
 </template>
@@ -49,6 +57,12 @@ export default {
       blobs: [],
       maxx: 0,
       maxy: 0,
+      selectionBox: {
+        x1: 0,
+        y1: 0,
+        x2: 0,
+        y2: 0
+      }
     }
   },
   computed: {
@@ -96,9 +110,12 @@ export default {
     this.FabricWrapper.fabricApp.on('mouse:down', function(options) {
       self.toggleSelectionDrag(true)
       const pointer = this.getPointer(options.e)
+      self.selectionBox.x1 = pointer.x;
+      self.selectionBox.y1 = pointer.y;
+
       console.log(pointer)
-      self.updateSelectionBoundingBox(['left', pointer.x])
-      self.updateSelectionBoundingBox(['top', pointer.y])
+      self.updateSelectionBoundingBox(['left', self.selectionBox.x1])
+      self.updateSelectionBoundingBox(['top', self.selectionBox.y1])
       self.updateSelectionBoundingBox(['width', 0])
       self.updateSelectionBoundingBox(['height', 0])
     });
@@ -107,8 +124,17 @@ export default {
       if (self.isSelecting) {
         const pointer = this.getPointer(options.e)
         console.log(pointer)
-        self.updateSelectionBoundingBox(['width', pointer.x - self.selectionBoundingBoxRect.left])
-        self.updateSelectionBoundingBox(['height', pointer.y - self.selectionBoundingBoxRect.top])
+        self.selectionBox.x2 = pointer.x;
+        self.selectionBox.y2 = pointer.y;
+        let minX = Math.min(self.selectionBox.x1, self.selectionBox.x2)
+        let minY = Math.min(self.selectionBox.y1, self.selectionBox.y2)
+        let maxX = Math.max(self.selectionBox.x1, self.selectionBox.x2)
+        let maxY = Math.max(self.selectionBox.y1, self.selectionBox.y2)
+
+        self.updateSelectionBoundingBox(['left', minX])
+        self.updateSelectionBoundingBox(['top', minY])
+        self.updateSelectionBoundingBox(['width', (maxX - minX)])
+        self.updateSelectionBoundingBox(['height',(maxY - minY)])
       }
     });
 
@@ -130,8 +156,11 @@ export default {
     var startTime = Date.now(), prevTime = startTime;
     
     var fps, myfps = 60;
+
     animate()
     function animate() {
+
+
 
       for (var i = 0; i < self.blobs.length; i++) {
         // self.blobs[i].x = self.blobs[i].x + (10 * Math.random() - 10 * Math.random())

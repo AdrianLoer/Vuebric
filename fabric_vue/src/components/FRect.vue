@@ -14,11 +14,11 @@ export default {
       type: Number
     },
     width: {
-      default: 10,
+      default: 0,
       type: Number
     },
     height: {
-      default: 10,
+      default: 0,
       type: Number
     },
     fill: {
@@ -34,32 +34,36 @@ export default {
   },
   watch: {
     left: function() {
-      // console.log(this.image)
       if (this.rect) {
-        this.rect.left = this.left
+        // console.log("left", this.left)
+        // this.rect.left = this.left
+        this.rect.set('left', this.left)
       }
     },
     top: function() {
-      // console.log(this.top)
       if (this.rect) {
-        this.rect.top = this.top
+        // console.log("top", this.top)
+        // this.rect.top = this.top
+        this.rect.set('top', this.top)
       }
     },
     width: function() {
       if (this.rect) {
-        console.log(this.width)
-        console.log(this.top)
-        this.rect.width = this.width
+        // console.log("width", this.width)        
+        // this.rect.width = this.width
+        this.rect.set('width', this.width)
       }
     },
     height: function() {
       if (this.rect) {
-        this.rect.height = this.height
+        // console.log("height", this.height)
+        // this.rect.height = this.height
+        this.rect.set('height', this.height)
       }
     },
     fill: function() {
       if (this.rect) {
-        this.rect.fill = this.fill
+        this.rect.set('fill', this.fill)
       }
     }
 
