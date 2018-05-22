@@ -38,6 +38,7 @@ export default {
         // console.log("left", this.left)
         // this.rect.left = this.left
         this.rect.set('left', this.left)
+        this.FabricWrapper.fabricApp.requestRenderAll()
       }
     },
     top: function() {
@@ -45,6 +46,7 @@ export default {
         // console.log("top", this.top)
         // this.rect.top = this.top
         this.rect.set('top', this.top)
+        this.FabricWrapper.fabricApp.requestRenderAll()
       }
     },
     width: function() {
@@ -52,6 +54,7 @@ export default {
         // console.log("width", this.width)        
         // this.rect.width = this.width
         this.rect.set('width', this.width)
+        this.FabricWrapper.fabricApp.requestRenderAll()
       }
     },
     height: function() {
@@ -59,6 +62,7 @@ export default {
         // console.log("height", this.height)
         // this.rect.height = this.height
         this.rect.set('height', this.height)
+        this.FabricWrapper.fabricApp.requestRenderAll()
       }
     },
     fill: function() {

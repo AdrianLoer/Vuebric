@@ -157,7 +157,7 @@ export default {
     
     var fps, myfps = 60;
 
-    animate()
+    // animate()
     function animate() {
 
 
