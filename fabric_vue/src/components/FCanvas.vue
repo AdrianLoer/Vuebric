@@ -1,5 +1,6 @@
 <template>
   <div class="fabric-renderer">
+    <div class="selection-status-header" v-bind:class="{ active: isSelecting }"></div>
     <canvas ref="renderCanvas"></canvas>
     <!-- All child <template> elements get added in here -->
     <!-- <img src="../assets/blob.png"> -->
@@ -10,14 +11,20 @@
       :top="blob.y"
     ></f-image> -->
     <f-rect
-    :left="100"
-    :top="100">
+      :left="selectionBoundingBoxRect.left"
+      :top="selectionBoundingBoxRect.top"
+      :width="selectionBoundingBoxRect.width"
+      :height="selectionBoundingBoxRect.height"
+      :fill="selectionBoundingBoxRect.fill"
+    >
     </f-rect>
     <slot></slot>
   </div>
 </template>
+
 <script>
 import Vue from 'vue';
+import { mapGetters, mapActions, mapMutations } from 'vuex'
 import {fabric} from 'fabric'
 import FImage from './FImage';
 import FRect from './FRect';
@@ -44,6 +51,18 @@ export default {
       maxy: 0,
     }
   },
+  computed: {
+		...mapGetters([
+	      	'selectionBoundingBoxRect',
+          'isSelecting'
+	    ])
+	},
+  methods: {
+    ...mapMutations([
+      'updateSelectionBoundingBox',
+      'toggleSelectionDrag'
+    ])
+  },
   // Allows descendants to inject everything.
   provide() {
     return {
@@ -53,7 +72,7 @@ export default {
   },
 
   mounted() {
-
+    // this.test()
     // Determine the width and height of the renderer wrapper element.
     const renderCanvas = this.$refs.renderCanvas;
     const w = renderCanvas.offsetWidth;
@@ -66,10 +85,38 @@ export default {
     })
 
     // function m
-    this.FabricWrapper.fabricApp.setHeight(window.innerHeight);
-    this.FabricWrapper.fabricApp.setWidth(window.innerWidth);
+    this.FabricWrapper.fabricApp.setHeight(800);
+    this.FabricWrapper.fabricApp.setWidth(1200);
     this.maxx = this.FabricWrapper.fabricApp.width;
     this.maxy = this.FabricWrapper.fabricApp.height;
+
+    // event handlers
+    var self = this;
+     // this.toggleSelectionDrag()
+    this.FabricWrapper.fabricApp.on('mouse:down', function(options) {
+      self.toggleSelectionDrag(true)
+      const pointer = this.getPointer(options.e)
+      console.log(pointer)
+      self.updateSelectionBoundingBox(['left', pointer.x])
+      self.updateSelectionBoundingBox(['top', pointer.y])
+      self.updateSelectionBoundingBox(['width', 0])
+      self.updateSelectionBoundingBox(['height', 0])
+    });
+
+    this.FabricWrapper.fabricApp.on('mouse:move', function(options) {
+      if (self.isSelecting) {
+        const pointer = this.getPointer(options.e)
+        console.log(pointer)
+        self.updateSelectionBoundingBox(['width', pointer.x - self.selectionBoundingBoxRect.left])
+        self.updateSelectionBoundingBox(['height', pointer.y - self.selectionBoundingBoxRect.top])
+      }
+    });
+
+    this.FabricWrapper.fabricApp.on('mouse:up', function(options) {
+      self.toggleSelectionDrag(false)
+    });
+
+    //  previous render loop
 
     for (var i = 0; i < this.total; i++) {
       this.blobs.push({
@@ -81,7 +128,7 @@ export default {
     }
     var frames = 0;
     var startTime = Date.now(), prevTime = startTime;
-    var self = this;
+    
     var fps, myfps = 60;
     animate()
     function animate() {
@@ -153,6 +200,19 @@ export default {
 <style scoped>
 canvas {
   width: 100%;
-  height: 100%;
+  height: calc(100% - 40px);
+}
+
+.selection-status-header {
+  height: 40px;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: purple;
+}
+
+.selection-status-header.active {
+  background-color: red;
 }
 </style>

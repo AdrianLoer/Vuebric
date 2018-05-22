@@ -4,7 +4,28 @@ export default {
   inject: ['EventBus', 'FabricWrapper'],
   // x, y define the sprite's position in the parent.
   // imagePath is the path to the image on the server to render as the sprite.
-  props: ['left', 'top'],
+  props: {
+    left: {
+      default: 0,
+      type: Number
+    },
+    top: {
+      default: 0,
+      type: Number
+    },
+    width: {
+      default: 10,
+      type: Number
+    },
+    height: {
+      default: 10,
+      type: Number
+    },
+    fill: {
+      default: "black",
+      type: String
+    }
+  },
 
   data() {
     return {
@@ -15,15 +36,33 @@ export default {
     left: function() {
       // console.log(this.image)
       if (this.rect) {
-        this.image.left = this.left
+        this.rect.left = this.left
       }
     },
     top: function() {
       // console.log(this.top)
       if (this.rect) {
-        this.image.top = this.top
+        this.rect.top = this.top
+      }
+    },
+    width: function() {
+      if (this.rect) {
+        console.log(this.width)
+        console.log(this.top)
+        this.rect.width = this.width
+      }
+    },
+    height: function() {
+      if (this.rect) {
+        this.rect.height = this.height
+      }
+    },
+    fill: function() {
+      if (this.rect) {
+        this.rect.fill = this.fill
       }
     }
+
   },
   render(h) { return h() },
 
@@ -46,14 +85,18 @@ export default {
         this.rect = new fabric.Rect({
           left: this.left,
           top: this.top,
-          width: 20,
-          height: 20
+          width: this.width,
+          height: this.height,
+          fill: this.fill,
+          selectable: false,
+          originX: 'left',
+          originY: 'top'
         });
         console.log(this.rect)
 
-        this.rect.on('moving', function(evt) {
-          console.log(this.get("top"))
-        });
+        // this.rect.on('moving', function(evt) {
+        //   // console.log(this.get("top"))
+        // });
 
         this.FabricWrapper.fabricApp.add(this.rect);
       })
