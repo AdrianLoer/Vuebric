@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import axios from "axios";
+import {CGroup, CRect} from './VueC/VueC';
 
 Vue.use(Vuex);
 
@@ -9,19 +10,26 @@ const API_ENDPOINT = "http://localhost:3000/api/"
 const state = {
   // editorContent: {}
   selectionBoundingBoxRect: {
-    top: 0,
-    left: 0,
-    width: 0,
-    height: 0,
+    top: 200,
+    left: 200,
+    width: 200,
+    height: 200,
     fill: "blue"
   },
   isSelecting: false,
+  canvasElementsRoot: {
+    obj: null,
+    elements: [
+      new CGroup(10, 10, 100, 100)
+    ]
+  }
 }
 
 const getters = {
   // editorContent: state => state.editorContent,
   selectionBoundingBoxRect: state => state.selectionBoundingBoxRect,
   isSelecting: state => state.isSelecting,
+  canvasElementsRoot: state => state.canvasElementsRoot
 }
 
 const mutations = {

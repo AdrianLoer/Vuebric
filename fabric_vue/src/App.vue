@@ -1,19 +1,15 @@
 <template>
   <div id="app">
-    <!-- <img src="./assets/logo.png"> -->
-    <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
     <f-canvas/>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
 import FCanvas from './components/FCanvas.vue'
 
 export default {
   name: 'app',
   components: {
-    HelloWorld,
     FCanvas
   }
 }

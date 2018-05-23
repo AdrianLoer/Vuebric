@@ -75,7 +75,7 @@ export default {
   render(h) { return h() },
 
   created() {
-    // console.log('fimage')
+    console.log('FRect created')
 
 
     // Forward the pointerdown event.
