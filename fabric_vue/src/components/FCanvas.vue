@@ -2,7 +2,7 @@
   <div class="fabric-renderer">
     <div class="selection-status-header" v-bind:class="{ active: isSelecting }"></div>
     <canvas ref="renderCanvas"></canvas>
-    <CRenderContainer :canvasElementsRoot="canvasElementsRoot"/>
+    <CRenderContainer :containerElements="canvasElementsRoot"/>
     <f-rect
       :left="selectionBoundingBoxRect.left"
       :top="selectionBoundingBoxRect.top"

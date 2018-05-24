@@ -17,12 +17,34 @@ const state = {
     fill: "blue"
   },
   isSelecting: false,
-  canvasElementsRoot: {
-    obj: null,
-    elements: [
-      new CGroup(10, 10, 100, 100)
-    ]
-  }
+  canvasElementsRoot: [
+    new CGroup(
+      "firstGroup",
+      200, 
+      10, 
+      100, 
+      100,
+      "purple",
+      [
+        new CRect(
+          "firstRect",
+          10,
+          10,
+          40,
+          40,
+          "yellow"
+        ),
+        new CRect(
+          "secondRect",
+          30,
+          30,
+          40,
+          40,
+          "green"
+        )
+      ]
+      )
+  ]
 }
 
 const getters = {
