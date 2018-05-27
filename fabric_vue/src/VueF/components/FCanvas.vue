@@ -23,11 +23,15 @@
 import Vue from 'vue';
 import { mapGetters, mapActions, mapMutations } from 'vuex'
 import {fabric} from 'fabric'
+
+import FCanvasMixin from './FCanvasMixin'
+
 // import CRenderContainer from './CRenderContainer'
 import FRect from './core/FRect';
 import FPolyline from './core/FPolyline';
 
 export default {
+  mixins: [FCanvasMixin],
   components: {
     // CRenderContainer,
     FRect,
@@ -35,13 +39,7 @@ export default {
   },
   data() {
     return {
-      // These need to be contained in an object because providers are not reactive.
-      FabricWrapper: {
-        fabricApp: null,
-        ready: false,
-      },
-      // used for ready events
-      EventBus: new Vue(),
+     
     }
   },
   computed: {
@@ -68,41 +66,10 @@ export default {
   },
 
   mounted() {
+    console.log("component mounted")
     // this.test()
     // Determine the width and height of the renderer wrapper element.
-    const renderCanvas = this.$refs.renderCanvas;
-    const w = renderCanvas.offsetWidth;
-    const h = renderCanvas.offsetHeight;
-
-    // Create a new PIXI app.
-    this.FabricWrapper.fabricApp = new fabric.Canvas(renderCanvas, {
-      renderOnAddRemove: false,
-      selection: false
-    })
-
-    // function m
-    this.FabricWrapper.fabricApp.setHeight(800);
-    this.FabricWrapper.fabricApp.setWidth(1200);
-    this.maxx = this.FabricWrapper.fabricApp.width;
-    this.maxy = this.FabricWrapper.fabricApp.height;
-
-
-    var self = this;
-    animate()
-    function animate() {
-      fabric.util.requestAnimFrame(animate);
-      self.FabricWrapper.fabricApp.renderAll();
-    }
-
-    self.FabricWrapper.fabricApp.renderAll();
-
-    //
-    // new PIXI.Application(w, h, {
-    //   view: renderCanvas,
-    //   backgroundColor: 0x1099bb
-    // });
-    this.EventBus.$emit('ready');
-    this.FabricWrapper.ready = true;
+   
 
   }
 }

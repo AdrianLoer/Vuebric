@@ -9,7 +9,7 @@ export default {
   // imagePath is the path to the image on the server to render as the sprite.
   props: {
     points: {
-      default: function() { return [] },
+      default: () => [],
       type: Array
     }
   },
