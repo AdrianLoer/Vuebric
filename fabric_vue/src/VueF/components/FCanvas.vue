@@ -14,7 +14,7 @@
     </f-rect> -->
 
 
-    <f-polyline :points="canvasElements.polyline"></f-polyline>
+    <!-- <f-polyline :points="canvasElements.polyline"></f-polyline> -->
     <slot></slot>
   </div>
 </template>

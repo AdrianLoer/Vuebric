@@ -1,16 +1,31 @@
 <template>
   <div id="app">
-    <f-canvas/>
+    <f-canvas>
+      <f-polyline :points="canvasElements.polyline"></f-polyline>
+    </f-canvas>
   </div>
 </template>
 
 <script>
-import FCanvas from './VueF/components/FCanvas.vue'
+
+import { mapGetters, mapActions, mapMutations } from 'vuex'
+
+import FCanvas from './VueF/components/FCanvas'
+import FPolyline from './VueF/components/core/FPolyline';
 
 export default {
   name: 'app',
   components: {
-    FCanvas
+    FCanvas,
+    FPolyline
+  },
+  computed: {
+  ...mapGetters([
+        // 'selectionBoundingBoxRect',
+        // 'isSelecting',
+        // 'canvasElementsRoot'
+        'canvasElements'
+    ])
   }
 }
 </script>
