@@ -96,9 +96,9 @@ export default {
         this.rect = new fabric.Rect({
           left: this.left,
           top: this.top,
-          width: this.width,
-          height: this.height,
-          fill: this.fill,
+          width: 10,
+          height: 10,
+          fill: "green",
           selectable: false,
           originX: 'left',
           originY: 'top'

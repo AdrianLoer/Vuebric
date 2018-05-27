@@ -65,6 +65,7 @@ const getters = {
 
 const mutations = {
   addToPolyline: (state, newPoint) => {
+    console.log(`addToPolyline x: ${newPoint.x} y: ${newPoint.y}`)
     state.canvasElements.polyline.push(newPoint);
   }
   // toggleLoginDialog: (state) => {

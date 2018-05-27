@@ -52,7 +52,7 @@ export default {
   methods: {
   	fRender: function() {
   		console.log("fRender")
-  		this.FabricWrapper.fabricApp.add(this.fObj);
+  		// this.FabricWrapper.fabricApp.add(this.fObj);
   		this.FabricWrapper.fabricApp.requestRenderAll();
   	}
   }

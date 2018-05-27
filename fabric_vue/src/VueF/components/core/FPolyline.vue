@@ -13,7 +13,14 @@ export default {
       type: Array
     }
   },
-
+  watch: {
+    points: function() {
+      console.log("points ", this.points)
+      // this.fObj.points = this.points
+      this.create()
+      // this.fRender()
+    }
+  },
   data() {
     return {
     }
@@ -25,18 +32,33 @@ export default {
 
       this.EventBus.$on('ready', () => {
         console.log('FPolyline ready received')
+         this.create()
+        // this.fObj = new fabric.Polyline(this.points, {
+        //   stroke: 'red',
+        //   left: 100,
+        //   top: 100,
+        //   strokeWidth: 8
+        // });
 
-        this.fObj = new fabric.Polyline(this.points, {
-          stroke: 'red',
-          left: 100,
-          top: 100,
-          strokeWidth: 8
-        });
-
-        // this.FabricWrapper.fabricApp.add(this.rect);
-        this.fRender()
+        // this.FabricWrapper.fabricApp.add(this.fObj);
+        // this.fRender()
       })
 
+  },
+  methods: {
+    create: function() {
+      if (this.fObj) {
+        this.FabricWrapper.fabricApp.remove(this.fObj)
+      }
+      this.fObj = new fabric.Polyline(this.points, {
+        stroke: 'red',
+        left: this.left,
+        top: this.top,
+        strokeWidth: 1
+      });
+      this.FabricWrapper.fabricApp.add(this.fObj);
+      this.fRender()
+    }
   }
 }
 </script>
