@@ -57,14 +57,14 @@ export default {
 
     // set up event handlers
 
-    this.FabricWrapper.fabricApp.on('mouse:down', function(options) {
-      // self.$emit('c-click', options)
-      self.EventBus.$emit('mouse:down', options)
-      // self.click(options)
-      // if (options.target) {
-      //   console.log('an object was clicked! ', options.target.type);
-      // }
-    });
+    // this.FabricWrapper.fabricApp.on('mouse:down', function(options) {
+    //   // self.$emit('c-click', options)
+    //   self.EventBus.$emit('mouse:down', options)
+    //   // self.click(options)
+    //   // if (options.target) {
+    //   //   console.log('an object was clicked! ', options.target.type);
+    //   // }
+    // });
 
 
   },
