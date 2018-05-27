@@ -4,6 +4,9 @@
     <f-canvas :copycss="true">
       <path-selector></path-selector>
     </f-canvas>
+    <f-canvas :copycss="true">
+      <path-selector></path-selector>
+    </f-canvas>
   </div>
 </template>
 

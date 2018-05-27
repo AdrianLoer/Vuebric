@@ -95,7 +95,8 @@ canvas {
 }
 
 .fabric-renderer {
-  width: 100vw;
-  height: 100vh;
+  width: 50vw;
+  height: 50vh;
+  border: 1px solid blue;
 }
 </style>

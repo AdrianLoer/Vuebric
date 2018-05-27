@@ -23,7 +23,7 @@
 
     <f-line
       v-for="segment in sortedDistances"
-      :lineCoords="segment.lineCoords"
+      :lineCoords="[segment.x1, segment.y1, segment.x2, segment.y2]"
       :stroke="'red'"
       :drawingIndex="0"
       :evented="false"
@@ -203,7 +203,7 @@ export default {
         const pointer = this.getPointer(event.e)
         this.moveNode({index: this.draggableNodeIndex, pointer: pointer})
       } else {
-        // this.calculatedDistances = this.calculateDistances(this.getPointer(event.e))
+        this.calculatedDistances = this.calculateDistances(this.getPointer(event.e))
 
       }
     })
