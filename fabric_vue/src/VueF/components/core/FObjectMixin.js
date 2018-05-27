@@ -57,7 +57,7 @@ export default {
 	    this.fUpdate('fill', newVal)
 	  },
 	  drawingIndex: function(newVal) {
-	  	console.log("drawingIndex ", newVal)
+	  	// console.log("drawingIndex ", newVal)
 	  	this.moveInDrawingIndex(newVal)
 	  }
   },
@@ -69,15 +69,20 @@ export default {
   			// console.log(this.drawingIndex)
   			this.moveInDrawingIndex(this.drawingIndex)
   			this.fRender()
+  			this.attachEventHandlers()
   		})
   	} else {
   		this.createObject();
   		this.FabricWrapper.fabricApp.add(this.fObj);
 		this.moveInDrawingIndex(this.drawingIndex)
   		this.fRender()
+  		this.attachEventHandlers()
   	}
   },
   methods: {
+  	mouseMoveHandler: function(event) {
+  		console.log("mouseMove", event)
+  	},
   	fRender: function() {
   		// console.log("fRender")
   		// this.FabricWrapper.fabricApp.add(this.fObj);
@@ -90,6 +95,16 @@ export default {
   	moveInDrawingIndex: function(newIndex) {
   		this.fObj.moveTo(newIndex)
   		this.fRender()
+  	},
+  	attachEventHandlers: function() {
+  		console.log("attaching event handlers", this.$listeners)
+  		if (this.$listeners.mouseDown) {
+  			console.log("attaching")
+	  		this.fObj.on('mousedown', function() {
+			  console.log("mouse:down");
+			});
+			console.log(this.fObj)
+  		}
   	}
   }
 }

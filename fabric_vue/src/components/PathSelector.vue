@@ -4,7 +4,8 @@
     <!-- <f-rect :left="canvasElements.polyline[canvasElements.polyline.length - 1].x" :top="canvasElements.polyline[canvasElements.polyline.length - 1].y"></f-rect> -->
     <!-- <f-circle :left="canvasElements.polyline[canvasElements.polyline.length - 1].x" :top="canvasElements.polyline[canvasElements.polyline.length - 1].y"></f-circle> -->
     <f-circle
-      v-for="node in canvasElements.clickedLocations" 
+      v-for="node in canvasElements.clickedLocations"
+      @mouseDown="moveNode"
       :left="node.x" 
       :top="node.y" 
       :drawingIndex="renderPosition.counters['nodes']"
@@ -81,6 +82,9 @@ export default {
     ]),
     getPointer: function(event) {
       return this.FabricWrapper.fabricApp.getPointer(event)
+    },
+    moveNode: function(event) {
+      console.log("moveNode")
     }
   },
   mounted() {
@@ -90,8 +94,8 @@ export default {
     // Determine the width and height of the renderer wrapper element.
    
     this.EventBus.$on('mouse:down', (event) => {
-      console.log('mouse down on canvas ', event)
-      this.addToPolyline(this.getPointer(event.e))
+      // console.log('mouse down on canvas ', event)
+      // this.addToPolyline(this.getPointer(event.e))
     })
   },
 }

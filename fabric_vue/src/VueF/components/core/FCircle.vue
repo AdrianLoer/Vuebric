@@ -33,6 +33,7 @@ export default {
         originY: 'center',
         selectable: this.selectable
       });
+
     }
   }
 }

@@ -54,7 +54,7 @@ const state = {
       { x: 40, y: 100 }
     ],
     renderOrder: {
-      typeOrder: ['edges', 'nodes'],
+      typeOrder: ['nodes', 'edges'],
       counters: {}
     }
   }
