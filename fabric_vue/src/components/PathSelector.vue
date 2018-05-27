@@ -5,7 +5,7 @@
     <!-- <f-circle :left="canvasElements.polyline[canvasElements.polyline.length - 1].x" :top="canvasElements.polyline[canvasElements.polyline.length - 1].y"></f-circle> -->
     <f-circle
       v-for="node in canvasElements.clickedLocations"
-      @mouseDown="moveNode"
+      @mouseDown="moveNode(node, ...arguments)"
       :left="node.x" 
       :top="node.y" 
       :drawingIndex="renderPosition.counters['nodes']"
@@ -83,8 +83,9 @@ export default {
     getPointer: function(event) {
       return this.FabricWrapper.fabricApp.getPointer(event)
     },
-    moveNode: function(event) {
-      console.log("moveNode")
+    moveNode: function(node, event) {
+      console.log("moveNode", node)
+      console.log("moveNode", event)
     }
   },
   mounted() {

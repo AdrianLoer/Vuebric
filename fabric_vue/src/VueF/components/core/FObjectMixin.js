@@ -97,11 +97,13 @@ export default {
   		this.fRender()
   	},
   	attachEventHandlers: function() {
+  		let self = this
   		console.log("attaching event handlers", this.$listeners)
   		if (this.$listeners.mouseDown) {
   			console.log("attaching")
-	  		this.fObj.on('mousedown', function() {
+	  		this.fObj.on('mousedown', function(event) {
 			  console.log("mouse:down");
+			  self.$emit('mouseDown', event)
 			});
 			console.log(this.fObj)
   		}
