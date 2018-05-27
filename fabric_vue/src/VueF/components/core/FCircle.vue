@@ -18,7 +18,6 @@ export default {
   render(h) { return h() },
 
   created() {
-    // all relevant code here moved to the mixin
     console.log('FCircle created')
   },
   methods: {
@@ -28,7 +27,7 @@ export default {
         top: this.top,
         strokeWidth: 2,
         radius: 8,
-        fill: '#fff',
+        fill: 'red',
         stroke: '#666',
         originX: 'center',
         originY: 'center',

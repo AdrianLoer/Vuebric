@@ -45,14 +45,15 @@ const state = {
       )
   ],
   canvasElements: {
-    polyline: [
+    clickedLocations: [
       { x: 10, y: 10 },
       { x: 50, y: 30 },
       { x: 40, y: 70 },
       { x: 60, y: 50 },
       { x: 100, y: 150 },
       { x: 40, y: 100 }
-    ]
+    ],
+    renderOrder: ['edges', 'nodes']
   }
 }
 
@@ -67,7 +68,10 @@ const getters = {
 const mutations = {
   addToPolyline: (state, newPoint) => {
     console.log(`addToPolyline x: ${newPoint.x} y: ${newPoint.y}`)
-    state.canvasElements.polyline.push(newPoint);
+    state.canvasElements.clickedLocations.push(newPoint);
+  },
+  reverseRenderOrder: (state) => {
+    state.canvasElements.renderOrder.reverse()
   }
   // toggleLoginDialog: (state) => {
   //   state.showLoginDialog = !state.showLoginDialog

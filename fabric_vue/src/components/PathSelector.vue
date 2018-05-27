@@ -3,7 +3,24 @@
     <!-- <f-polyline :points="canvasElements.polyline"></f-polyline> -->
     <!-- <f-rect :left="canvasElements.polyline[canvasElements.polyline.length - 1].x" :top="canvasElements.polyline[canvasElements.polyline.length - 1].y"></f-rect> -->
     <!-- <f-circle :left="canvasElements.polyline[canvasElements.polyline.length - 1].x" :top="canvasElements.polyline[canvasElements.polyline.length - 1].y"></f-circle> -->
-    <f-circle v-for="node in canvasElements.polyline" :left="node.x" :top="node.y"></f-circle>
+    <f-circle
+      v-for="node in canvasElements.clickedLocations" 
+      :left="node.x" 
+      :top="node.y" 
+      
+      ></f-circle>
+      <!-- :drawingIndex="canvasElements.renderOrder.indexOf('nodes')" -->
+
+    <f-line
+      v-for="segment in lineSegments" 
+      :lineCoords="segment" 
+      
+      ></f-line>
+      <!-- :drawingIndex="canvasElements.renderOrder.indexOf('edges')" -->
+
+
+      <button @click="reverseRenderOrder">reverse render order</button>
+
   </div>
 </template>
 
@@ -14,6 +31,7 @@ import {fabric} from 'fabric'
 
 // import FRect from '../VueF/components/core/FRect';
 import FCircle from '../VueF/components/core/FCircle';
+import FLine from '../VueF/components/core/FLine';
 import FPolyline from '../VueF/components/core/FPolyline';
 
 export default {
@@ -21,21 +39,35 @@ export default {
   components: {
     FPolyline,
     // FRect,
-    FCircle
+    FCircle,
+    FLine
   },
   data() {
     return {
-     
+      
     }
   },
   computed: {
 		...mapGetters([
           'canvasElements'
-	    ])
+	    ]),
+    lineSegments: function() {
+      let segments = [];
+      for (var i = 0; i < this.canvasElements.clickedLocations.length - 1; i++) {
+        segments.push([
+          this.canvasElements.clickedLocations[i].x,
+          this.canvasElements.clickedLocations[i].y,
+          this.canvasElements.clickedLocations[i + 1].x,
+          this.canvasElements.clickedLocations[i + 1].y
+          ])
+      }
+      return segments
+    }
 	},
   methods: {
     ...mapMutations([
-      'addToPolyline'
+      'addToPolyline',
+      'reverseRenderOrder'
     ]),
     getPointer: function(event) {
       return this.FabricWrapper.fabricApp.getPointer(event)

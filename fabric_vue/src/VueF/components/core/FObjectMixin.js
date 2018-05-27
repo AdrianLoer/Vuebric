@@ -34,6 +34,10 @@ export default {
     selectable: {
     	default: false,
     	type: Boolean
+    },
+    drawingIndex: {
+    	default: 0,
+    	type: Number
     }
   },
   watch: {
@@ -51,6 +55,10 @@ export default {
 	  },
 	  fill: function(newVal) {
 	    this.fUpdate('fill', newVal)
+	  },
+	  drawingIndex: function(newVal) {
+	  	console.log("drawingIndex ", newVal)
+	  	this.moveInDrawingIndex(newVal)
 	  }
   },
   created() {
@@ -58,11 +66,14 @@ export default {
   		this.EventBus.$on('ready', () => {
   			this.createObject();
   			this.FabricWrapper.fabricApp.add(this.fObj);
+  			console.log(this.drawingIndex)
+  			this.moveInDrawingIndex(this.drawingIndex)
   			this.fRender()
   		})
   	} else {
   		this.createObject();
   		this.FabricWrapper.fabricApp.add(this.fObj);
+		this.moveInDrawingIndex(this.drawingIndex)
   		this.fRender()
   	}
   },
@@ -74,6 +85,10 @@ export default {
   	},
   	fUpdate: function(key, val) {
   		this.fObj.set(key, val)
+  		this.fRender()
+  	},
+  	moveInDrawingIndex: function(newIndex) {
+  		this.fObj.moveTo(newIndex)
   		this.fRender()
   	}
   }
