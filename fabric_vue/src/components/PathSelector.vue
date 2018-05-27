@@ -7,19 +7,16 @@
       v-for="node in canvasElements.clickedLocations" 
       :left="node.x" 
       :top="node.y" 
-      
+      :drawingIndex="renderPosition.counters['nodes']"
       ></f-circle>
-      <!-- :drawingIndex="canvasElements.renderOrder.indexOf('nodes')" -->
 
     <f-line
       v-for="segment in lineSegments" 
       :lineCoords="segment" 
-      
+      :drawingIndex="renderPosition.counters['edges']"
       ></f-line>
-      <!-- :drawingIndex="canvasElements.renderOrder.indexOf('edges')" -->
-
-
-      <button @click="reverseRenderOrder">reverse render order</button>
+      {{renderPosition.counters}}
+      <button @click="updateRenderOrder">reverse render order</button>
 
   </div>
 </template>
@@ -47,13 +44,23 @@ export default {
       
     }
   },
+  watch: {
+    renderPosition: {
+      handler: function(val) {
+        console.log(JSON.stringify(val))
+      },
+      deep: true
+    }
+  },
   computed: {
 		...mapGetters([
-          'canvasElements'
+          'canvasElements',
+          'renderPosition',
+          'renderCounter'
 	    ]),
     lineSegments: function() {
       let segments = [];
-      for (var i = 0; i < this.canvasElements.clickedLocations.length - 1; i++) {
+      for (let i = 0; i < this.canvasElements.clickedLocations.length - 1; i++) {
         segments.push([
           this.canvasElements.clickedLocations[i].x,
           this.canvasElements.clickedLocations[i].y,
@@ -67,7 +74,10 @@ export default {
   methods: {
     ...mapMutations([
       'addToPolyline',
-      'reverseRenderOrder'
+      'reverseRenderOrder',
+    ]),
+    ...mapActions([
+      'updateRenderOrder'
     ]),
     getPointer: function(event) {
       return this.FabricWrapper.fabricApp.getPointer(event)
@@ -75,6 +85,7 @@ export default {
   },
   mounted() {
     console.log("component mounted")
+    this.updateRenderOrder()
     // this.test()
     // Determine the width and height of the renderer wrapper element.
    

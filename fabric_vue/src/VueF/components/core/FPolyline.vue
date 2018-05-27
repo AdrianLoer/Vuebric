@@ -20,7 +20,7 @@ export default {
       // this.create()
       // this.update()
       this.FabricWrapper.fabricApp.remove(this.fObj);
-           var obj = this.fObj.toObject();
+           let obj = this.fObj.toObject();
            delete obj.top;
            delete obj.left;
            this.fObj = new fabric.Polyline(this.points, obj);

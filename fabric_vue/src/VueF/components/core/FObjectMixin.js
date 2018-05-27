@@ -66,7 +66,7 @@ export default {
   		this.EventBus.$on('ready', () => {
   			this.createObject();
   			this.FabricWrapper.fabricApp.add(this.fObj);
-  			console.log(this.drawingIndex)
+  			// console.log(this.drawingIndex)
   			this.moveInDrawingIndex(this.drawingIndex)
   			this.fRender()
   		})
@@ -79,7 +79,7 @@ export default {
   },
   methods: {
   	fRender: function() {
-  		console.log("fRender")
+  		// console.log("fRender")
   		// this.FabricWrapper.fabricApp.add(this.fObj);
   		this.FabricWrapper.fabricApp.requestRenderAll();
   	},

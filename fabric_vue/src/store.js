@@ -53,7 +53,10 @@ const state = {
       { x: 100, y: 150 },
       { x: 40, y: 100 }
     ],
-    renderOrder: ['edges', 'nodes']
+    renderOrder: {
+      typeOrder: ['edges', 'nodes'],
+      counters: {}
+    }
   }
 }
 
@@ -62,7 +65,14 @@ const getters = {
   // selectionBoundingBoxRect: state => state.selectionBoundingBoxRect,
   // isSelecting: state => state.isSelecting,
   canvasElementsRoot: state => state.canvasElementsRoot,
-  canvasElements: state => state.canvasElements
+  canvasElements: state => state.canvasElements,
+  renderPosition: state => {
+    console.log(state.canvasElements.renderOrder)
+    return state.canvasElements.renderOrder
+  },
+  // somehow like this i can pass an argument to the getter but cant seem to get it working right now
+  // TODO see below
+  // renderCounter: state => type => {
 }
 
 const mutations = {
@@ -71,21 +81,31 @@ const mutations = {
     state.canvasElements.clickedLocations.push(newPoint);
   },
   reverseRenderOrder: (state) => {
-    state.canvasElements.renderOrder.reverse()
+    state.canvasElements.renderOrder.typeOrder = state.canvasElements.renderOrder.typeOrder.slice().reverse()
+    // console.log("reverse",state.canvasElements.renderOrder.typeOrder)
+  },
+  // 
+  // this is intended to be used later on with a counter for each type of object to order them
+  // within their class/function and incrementing for every single component
+  // that asks here for the order
+  // right now its just a simple 1000 z-index offset and thus
+  // *every object of the same class is on the same level*
+  // this is *not done yet*
+  // 
+  createRenderOrder: (state) => {
+    for (let i = 0; i < state.canvasElements.renderOrder.typeOrder.length; i++) {
+      // console.log(state.canvasElements.renderOrder.typeOrder[i])
+      Vue.set(state.canvasElements.renderOrder.counters, state.canvasElements.renderOrder.typeOrder[i], 1000 * i)
+    }
+    // console.log(state.canvasElements.renderOrder)
   }
-  // toggleLoginDialog: (state) => {
-  //   state.showLoginDialog = !state.showLoginDialog
-  // },
-  // updateSelectionBoundingBox: (state, opts) => {
-  //   // console.log("updateSelectionBoundingBox " + opts[0], opts[1])
-  //   state.selectionBoundingBoxRect[opts[0]] = opts[1];
-  // },
-  // toggleSelectionDrag: (state, value) => {
-  //   state.isSelecting = value;
-  // },
 }
 
 const actions = {
+  updateRenderOrder({commit}) {
+    commit('reverseRenderOrder')
+    commit('createRenderOrder')
+  }
   // test({commit}) {
   //   console.log("test")
   // }

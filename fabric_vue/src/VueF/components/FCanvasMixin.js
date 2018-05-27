@@ -42,7 +42,7 @@ export default {
 
 
 
-    var self = this;
+    let self = this;
     // animate()
     // function animate() {
     //   fabric.util.requestAnimFrame(animate);
