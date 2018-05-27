@@ -1,16 +1,20 @@
 <template>
   <div class="fabric-renderer">
-    <div class="selection-status-header" v-bind:class="{ active: isSelecting }"></div>
+    <!-- <div class="selection-status-header" v-bind:class="{ active: isSelecting }"></div> -->
     <canvas ref="renderCanvas"></canvas>
-    <CRenderContainer :containerElements="canvasElementsRoot"/>
-    <f-rect
+    <!-- <CRenderContainer :containerElements="canvasElementsRoot"/> -->
+    <!-- <f-rect></f-rect> -->
+<!--     <f-rect
       :left="selectionBoundingBoxRect.left"
       :top="selectionBoundingBoxRect.top"
       :width="selectionBoundingBoxRect.width"
       :height="selectionBoundingBoxRect.height"
       :fill="selectionBoundingBoxRect.fill"
     >
-    </f-rect>
+    </f-rect> -->
+
+
+    <f-polyline :points="canvasElements.polyline"></f-polyline>
     <slot></slot>
   </div>
 </template>
@@ -19,40 +23,40 @@
 import Vue from 'vue';
 import { mapGetters, mapActions, mapMutations } from 'vuex'
 import {fabric} from 'fabric'
-import CRenderContainer from './CRenderContainer'
-import FImage from './FImage';
-import FRect from './FRect';
+// import CRenderContainer from './CRenderContainer'
+import FRect from './core/FRect';
+import FPolyline from './core/FPolyline';
 
 export default {
   components: {
-    CRenderContainer,
-    FImage,
+    // CRenderContainer,
     FRect,
+    FPolyline,
   },
   data() {
     return {
       // These need to be contained in an object because providers are not reactive.
       FabricWrapper: {
-        // Expose PIXI and the created app to all descendants.
         fabricApp: null,
         ready: false,
       },
-      // Expose the event bus to all descendants so they can listen for the app-ready event.
+      // used for ready events
       EventBus: new Vue(),
-    
     }
   },
   computed: {
 		...mapGetters([
-	      	'selectionBoundingBoxRect',
-          'isSelecting',
-          'canvasElementsRoot'
+	      	// 'selectionBoundingBoxRect',
+          // 'isSelecting',
+          // 'canvasElementsRoot'
+          'canvasElements'
 	    ])
 	},
   methods: {
     ...mapMutations([
-      'updateSelectionBoundingBox',
-      'toggleSelectionDrag'
+      // 'updateSelectionBoundingBox',
+      // 'toggleSelectionDrag'
+      'addToPolyline'
     ])
   },
   // Allows descendants to inject everything.
@@ -99,6 +103,7 @@ export default {
     // });
     this.EventBus.$emit('ready');
     this.FabricWrapper.ready = true;
+
   }
 }
 </script>

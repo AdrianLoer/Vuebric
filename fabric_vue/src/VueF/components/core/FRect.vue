@@ -1,6 +1,9 @@
 <script>
 import {fabric} from 'fabric'
+import FObjectMixin from './FObjectMixin'
+
 export default {
+  mixins: [FObjectMixin],
   inject: ['EventBus', 'FabricWrapper'],
   // x, y define the sprite's position in the parent.
   // imagePath is the path to the image on the server to render as the sprite.

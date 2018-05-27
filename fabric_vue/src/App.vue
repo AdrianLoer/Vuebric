@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import FCanvas from './components/FCanvas.vue'
+import FCanvas from './VueF/components/FCanvas.vue'
 
 export default {
   name: 'app',

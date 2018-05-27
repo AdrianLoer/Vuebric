@@ -3,7 +3,7 @@
 // in their own files
 
 
-class CObject {
+class FObject {
   constructor(identifier, top, left, height, width, fill) {
   	this.identifier = identifier;
   	this.top = top;
@@ -11,15 +11,15 @@ class CObject {
     this.height = height;
     this.width = width;
     this.fill = fill;
-    console.log(`
-    	set up CObject with
-    	identifier: ${this.identifier}
-    	top: ${this.top}
-    	left: ${this.left}
-    	height: ${this.height}
-    	width: ${this.width}
-    	fill: ${this.fill}
-    	`)
+    // console.log(`
+    // 	set up FObject with
+    // 	identifier: ${this.identifier}
+    // 	top: ${this.top}
+    // 	left: ${this.left}
+    // 	height: ${this.height}
+    // 	width: ${this.width}
+    // 	fill: ${this.fill}
+    // 	`)
 	}
 
     // get top() {
@@ -36,11 +36,11 @@ class CObject {
     // }
 }
 
-class CGroup extends CObject {
+class FGroup extends FObject {
 	constructor(identifier, top, left, height, width, fill, groupElements) {
 		super(identifier, top, left, height, width, fill)
 		this.groupElements = groupElements;
-		console.log('=> set up as CGroup')
+		console.log('=> set up as FGroup')
 	}
 
 	get elements() {
@@ -49,11 +49,11 @@ class CGroup extends CObject {
 
 }
 
-class CRect extends CObject {
+class FRect extends FObject {
 	constructor(identifier, top, left, height, width, fill) {
 		super(identifier, top, left, height, width, fill)
-		console.log('=> set up as CRect')
+		console.log('=> set up as FRect')
 	}
 }
 
-export {CGroup, CRect};
+export {FGroup, FRect};

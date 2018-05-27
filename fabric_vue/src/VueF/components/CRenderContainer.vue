@@ -30,16 +30,16 @@ export default {
     }
   },
   computed: {
-		...mapGetters([
-	      	'selectionBoundingBoxRect',
-          'isSelecting'
-	    ])
+		// ...mapGetters([
+	 //      	'selectionBoundingBoxRect',
+  //         'isSelecting'
+	 //    ])
 	},
   methods: {
-    ...mapMutations([
-      'updateSelectionBoundingBox',
-      'toggleSelectionDrag'
-    ])
+    // ...mapMutations([
+    //   'updateSelectionBoundingBox',
+    //   'toggleSelectionDrag'
+    // ])
   },
   // this.EventBus.$on('ready', () => {
   render: function (createElement) {
