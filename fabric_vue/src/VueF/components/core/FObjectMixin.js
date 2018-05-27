@@ -33,8 +33,8 @@ export default {
     }
   },
   watch: {
-	  left: function() {
-	    console.log("left changed in mixin")
+	  left: function(newVal) {
+	    // console.log("left changed in mixin", newVal)
 	  },
 	  top: function() {
 	   

@@ -37,13 +37,13 @@ export default {
 
 
     var self = this;
-    animate()
-    function animate() {
-      fabric.util.requestAnimFrame(animate);
-      self.FabricWrapper.fabricApp.renderAll();
-    }
+    // animate()
+    // function animate() {
+    //   fabric.util.requestAnimFrame(animate);
+    //   self.FabricWrapper.fabricApp.renderAll();
+    // }
 
-    self.FabricWrapper.fabricApp.renderAll();
+    // self.FabricWrapper.fabricApp.renderAll();
 
     this.EventBus.$emit('ready');
     // ? not used?

@@ -40,16 +40,16 @@ export default {
       if (this.rect) {
         // console.log("left", this.left)
         // this.rect.left = this.left
-        this.rect.set('left', this.left)
-        this.FabricWrapper.fabricApp.requestRenderAll()
+        // this.rect.set('left', this.left)
+        // this.FabricWrapper.fabricApp.requestRenderAll()
       }
     },
     top: function() {
       if (this.rect) {
         // console.log("top", this.top)
         // this.rect.top = this.top
-        this.rect.set('top', this.top)
-        this.FabricWrapper.fabricApp.requestRenderAll()
+        // this.rect.set('top', this.top)
+        // this.FabricWrapper.fabricApp.requestRenderAll()
       }
     },
     width: function() {
