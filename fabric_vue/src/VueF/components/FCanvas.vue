@@ -1,7 +1,7 @@
 <template>
   <div class="fabric-renderer">
     <!-- <div class="selection-status-header" v-bind:class="{ active: isSelecting }"></div> -->
-    <canvas ref="renderCanvas"></canvas>
+    <!-- <canvas ref="renderCanvas"></canvas> -->
     <!-- <CRenderContainer :containerElements="canvasElementsRoot"/> -->
     <!-- <f-rect></f-rect> -->
 <!--     <f-rect
@@ -77,8 +77,8 @@ export default {
 
 <style scoped>
 canvas {
-  width: 100%;
-  height: calc(100% - 40px);
+/*  width: 100%;
+  height: calc(100% - 40px);*/
 }
 
 .selection-status-header {

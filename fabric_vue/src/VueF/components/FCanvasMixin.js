@@ -1,6 +1,16 @@
 import Vue from 'vue';
 
 export default {
+  props: {
+    width: {
+      default: 400,
+      type: Number
+    },
+    height: {
+      default: 400,
+      type: Number
+    }
+  },
   data: function () {
     return {
     // These need to be contained in an object because providers are not reactive.
@@ -14,20 +24,16 @@ export default {
   },
   mounted() {
     console.log("mixin mounted")
-
-    const renderCanvas = this.$refs.renderCanvas;
-    const w = renderCanvas.offsetWidth;
-    const h = renderCanvas.offsetHeight;
-
+    const renderCanvas = document.createElement('canvas');
+    this.$el.appendChild(renderCanvas)
+    // const renderCanvas = this.$refs.renderCanvas;
     this.FabricWrapper.fabricApp = new fabric.Canvas(renderCanvas, {
       renderOnAddRemove: false,
-      selection: false
+      selection: false,
+      width: this.width,
+      height: this.height
     })
 
-    this.FabricWrapper.fabricApp.setHeight(800);
-    this.FabricWrapper.fabricApp.setWidth(1200);
-    this.maxx = this.FabricWrapper.fabricApp.width;
-    this.maxy = this.FabricWrapper.fabricApp.height;
 
 
     var self = this;
@@ -55,11 +61,6 @@ export default {
     });
 
 
-  },
-  props: {
-  	
-  },
-  watch: {
   },
   methods: {
     click: function(event) {

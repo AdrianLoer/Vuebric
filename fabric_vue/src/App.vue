@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <!-- <f-canvas @c-click="addPointToPolygon"> -->
-    <f-canvas>
+    <f-canvas :width="1200" :height="800">
       <path-selector></path-selector>
     </f-canvas>
   </div>
