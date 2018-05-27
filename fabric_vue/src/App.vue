@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <f-canvas>
+    <f-canvas @c-click="test">
       <f-polyline :points="canvasElements.polyline"></f-polyline>
     </f-canvas>
   </div>
@@ -26,6 +26,11 @@ export default {
         // 'canvasElementsRoot'
         'canvasElements'
     ])
+  },
+  methods: {
+    test: function(opts) {
+      console.log("test", opts)
+    }
   }
 }
 </script>
