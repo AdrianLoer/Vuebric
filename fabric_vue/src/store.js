@@ -49,7 +49,7 @@ const state = {
       // { x: 10, y: 10 },
     ],
     renderOrder: {
-      typeOrder: ['nodes', 'edges'],
+      typeOrder: ['nodes', 'debug-lines', 'edges'],
       counters: {}
     }
   }

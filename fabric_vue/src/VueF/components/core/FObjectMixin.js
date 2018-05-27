@@ -32,6 +32,10 @@ export default {
 		type: Number
     },
     fill: {
+		default: "purple",
+		type: String
+    },
+    stroke: {
 		default: "black",
 		type: String
     },
@@ -59,6 +63,9 @@ export default {
 	  },
 	  fill: function(newVal) {
 	    this.fUpdate('fill', newVal)
+	  },
+	  stroke: function(newVal) {
+	    this.fUpdate('stroke', newVal)
 	  },
 	  drawingIndex: function(newVal) {
 	  	// console.log("drawingIndex ", newVal)
@@ -89,7 +96,7 @@ export default {
   	afterCreateObject: function() {
 		this.fObj.id = this.id
   	},
-  	mouseMoveHandler: function(event) {
+  	mouseMoveHandler: function(event) { 
   		console.log("mouseMove", event)
   	},
   	fRender: function() {

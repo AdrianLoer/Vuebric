@@ -9,7 +9,7 @@ export default {
     lineCoords: {
       default: () => [],
       type: Array
-    }
+    },
   },
   data() {
     return {
@@ -24,7 +24,7 @@ export default {
         'y2': newVal[3]
       })
       this.fRender();
-    }
+    },
   },
   render(h) { return h() },
 
@@ -37,8 +37,8 @@ export default {
         // left: this.left,
         // top: this.top,
         strokeWidth: 2,
-        fill: '#fff',
-        stroke: '#666',
+        fill: this.fill,
+        stroke: this.stroke,
         originX: 'center',
         originY: 'center',
         selectable: this.selectable

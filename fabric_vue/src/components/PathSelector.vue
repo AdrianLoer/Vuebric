@@ -19,10 +19,19 @@
       :drawingIndex="renderPosition.counters['edges']"
       ></f-line>
 
+      <f-line
+      v-for="segment in sortedDistances"
+      :lineCoords="segment"
+      :stroke="'red'"
+      :drawingIndex="renderPosition.counters['debug-lines']"
+      >
+      </f-line>
+
       <div class="debug">
         <button @click="updateRenderOrder">reverse render order</button>
         <!-- {{renderPosition.counters}} -->
         <p>dragging node {{draggableNodeIndex}}</p>
+        {{sortedDistances}}
       </div>
 
   </div>
@@ -49,6 +58,7 @@ export default {
   data() {
     return {
       draggableNodeIndex: undefined,
+      calculatedDistances: []
     }
   },
   computed: {
@@ -68,6 +78,12 @@ export default {
           ])
       }
       return segments
+    },
+    sortedDistances: function() {
+      const sorted = this.calculatedDistances.sort(function(a, b) {
+        return a.dist - b.dist;
+      })
+      return sorted.map((item) => {return [item.x1, item.y1, item.x2, item.y2]}).slice(0, 10)
     }
 	},
   methods: {
@@ -87,6 +103,54 @@ export default {
     checkAndMoveNode: function(node, event) {
       // console.log("checkAndMoveNode", node)
       // console.log("checkAndMoveNode", event)
+    },
+    calculateDistances: function(pointer) {
+      let r = []
+      for (let i = 0; i < this.lineSegments.length; i++) {
+        const seg = this.lineSegments[i];
+        const dist = this.pDistance(pointer.x, pointer.y, seg[0], seg[1], seg[2], seg[3])
+        r.push(dist)
+      }
+      return r;
+    },
+    pDistance: function(x, y, x1, y1, x2, y2) {
+
+      var A = x - x1;
+      var B = y - y1;
+      var C = x2 - x1;
+      var D = y2 - y1;
+
+      var dot = A * C + B * D;
+      var len_sq = C * C + D * D;
+      var param = -1;
+      if (len_sq != 0)
+          param = dot / len_sq;
+
+      var xx, yy;
+
+      if (param < 0) {
+        xx = x1;
+        yy = y1;
+      }
+      else if (param > 1) {
+        xx = x2;
+        yy = y2;
+      }
+      else {
+        xx = x1 + param * C;
+        yy = y1 + param * D;
+      }
+
+      var dx = x - xx;
+      var dy = y - yy;
+
+      return {
+        dist: Math.sqrt(dx * dx + dy * dy),
+        x1: x,
+        y1: y,
+        x2: x - dx,
+        y2: y - dy
+      }
     }
   },
   mounted() {
@@ -101,6 +165,7 @@ export default {
         this.draggableNodeIndex = event.target.id.split('node-')[1];
       } else if (event && event.target && event.target.id && event.target.id.indexOf("edge") > -1) {
         console.log('clicked on vertex')
+        // const this.calculateDistances(this.getPointer(event.e))
       } else {
         this.addToPolyline(this.getPointer(event.e))
       }
@@ -110,6 +175,9 @@ export default {
       if (this.draggableNodeIndex) {
         const pointer = this.getPointer(event.e)
         this.moveNode({index: this.draggableNodeIndex, pointer: pointer})
+      } else {
+        this.calculatedDistances = this.calculateDistances(this.getPointer(event.e))
+
       }
     })
 
@@ -127,9 +195,10 @@ canvas {
 }
 
 .debug {
-  position: absolute;
+  /*position: absolute;*/
   /*top: 0;*/
-
+  height: 100px;
+  background-color: yellow;
 }
 
 .selection-status-header {
