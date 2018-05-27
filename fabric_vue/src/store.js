@@ -1,4 +1,5 @@
-import Vue from "vue";
+// import Vue from "vue";
+import Vue from 'vue/dist/vue.js';
 import Vuex from "vuex";
 import axios from "axios";
 import {FGroup, FRect} from './VueF/VueF';
