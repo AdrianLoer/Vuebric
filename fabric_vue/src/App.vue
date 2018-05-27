@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <!-- <f-canvas @c-click="addPointToPolygon"> -->
-    <f-canvas :width="1200" :height="800">
+    <f-canvas :width="1600" :height="1400" :copycss="true">
       <path-selector></path-selector>
     </f-canvas>
   </div>
@@ -24,12 +24,15 @@ export default {
 </script>
 
 <style>
+body {
+  margin: 0;
+}
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  /*margin-top: 60px;*/
 }
 </style>

@@ -18,25 +18,8 @@ export default {
   render(h) { return h() },
 
   created() {
+    // all relevant code here moved to the mixin
     console.log('FCircle created')
-    // this.defineObject()
-
-    // this.EventBus.$on('ready', () => {
-    //   this.fObj = new fabric.Circle({
-    //     left: this.left,
-    //     top: this.top,
-    //     strokeWidth: 2,
-    //     radius: 8,
-    //     fill: '#fff',
-    //     stroke: '#666',
-    //     originX: 'center',
-    //     originY: 'center',
-    //     selectable: this.selectable
-    //   });
-
-      
-    // })
-
   },
   methods: {
     createObject: function() {

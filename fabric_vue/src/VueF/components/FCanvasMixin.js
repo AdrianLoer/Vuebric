@@ -9,6 +9,10 @@ export default {
     height: {
       default: 400,
       type: Number
+    },
+    copycss: {
+      defualt: false,
+      type: Boolean
     }
   },
   data: function () {
@@ -27,11 +31,13 @@ export default {
     const renderCanvas = document.createElement('canvas');
     this.$el.appendChild(renderCanvas)
     // const renderCanvas = this.$refs.renderCanvas;
+    const canvasWidth = this.copycss ? this.$el.offsetWidth : this.width;
+    const canvasHeight = this.copycss ? this.$el.offsetHeight : this.height;
     this.FabricWrapper.fabricApp = new fabric.Canvas(renderCanvas, {
       renderOnAddRemove: false,
       selection: false,
-      width: this.width,
-      height: this.height
+      width: canvasWidth,
+      height: canvasHeight
     })
 
 
@@ -44,7 +50,7 @@ export default {
     // }
 
     // self.FabricWrapper.fabricApp.renderAll();
-    
+
     this.FabricWrapper.ready = true;
     this.EventBus.$emit('ready');
     // ? not used?

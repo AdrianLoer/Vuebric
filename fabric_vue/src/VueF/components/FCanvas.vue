@@ -93,4 +93,9 @@ canvas {
 .selection-status-header.active {
   background-color: red;
 }
+
+.fabric-renderer {
+  width: 100vw;
+  height: 100vh;
+}
 </style>
