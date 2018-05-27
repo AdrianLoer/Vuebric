@@ -16,7 +16,15 @@ export default {
     }
   },
   watch: {
-
+    lineCoords: function(newVal) {
+      this.fObj.set({
+        'x1': newVal[0],
+        'y1': newVal[1],
+        'x2': newVal[2],
+        'y2': newVal[3]
+      })
+      this.fRender();
+    }
   },
   render(h) { return h() },
 

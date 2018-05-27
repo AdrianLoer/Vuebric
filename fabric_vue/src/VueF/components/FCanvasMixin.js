@@ -37,7 +37,8 @@ export default {
       renderOnAddRemove: false,
       selection: false,
       width: canvasWidth,
-      height: canvasHeight
+      height: canvasHeight,
+      perPixelTargetFind: true
     })
 
 
@@ -57,14 +58,18 @@ export default {
 
     // set up event handlers
 
-    // this.FabricWrapper.fabricApp.on('mouse:down', function(options) {
-    //   // self.$emit('c-click', options)
-    //   self.EventBus.$emit('mouse:down', options)
-    //   // self.click(options)
-    //   // if (options.target) {
-    //   //   console.log('an object was clicked! ', options.target.type);
-    //   // }
-    // });
+    this.FabricWrapper.fabricApp.on('mouse:down', function(options) {
+      self.EventBus.$emit('mouse:down', options)
+    });
+
+    this.FabricWrapper.fabricApp.on('mouse:move', function(options) {
+      self.EventBus.$emit('mouse:move', options)
+    });
+
+    this.FabricWrapper.fabricApp.on('mouse:up', function(options) {
+      self.EventBus.$emit('mouse:up', options)
+    });
+
 
 
   },

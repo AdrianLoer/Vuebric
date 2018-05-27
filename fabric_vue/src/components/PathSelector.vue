@@ -4,8 +4,9 @@
     <!-- <f-rect :left="canvasElements.polyline[canvasElements.polyline.length - 1].x" :top="canvasElements.polyline[canvasElements.polyline.length - 1].y"></f-rect> -->
     <!-- <f-circle :left="canvasElements.polyline[canvasElements.polyline.length - 1].x" :top="canvasElements.polyline[canvasElements.polyline.length - 1].y"></f-circle> -->
     <f-circle
-      v-for="node in canvasElements.clickedLocations"
-      @mouseDown="moveNode(node, ...arguments)"
+      v-for="(node, index) in canvasElements.clickedLocations"
+      :id="`node-${index}`"
+      @mouseMove="checkAndMoveNode(node, ...arguments)"
       :left="node.x" 
       :top="node.y" 
       :drawingIndex="renderPosition.counters['nodes']"
@@ -13,11 +14,16 @@
 
     <f-line
       v-for="segment in lineSegments" 
+      :id="'edge'"
       :lineCoords="segment" 
       :drawingIndex="renderPosition.counters['edges']"
       ></f-line>
-      {{renderPosition.counters}}
-      <button @click="updateRenderOrder">reverse render order</button>
+
+      <div class="debug">
+        <button @click="updateRenderOrder">reverse render order</button>
+        <!-- {{renderPosition.counters}} -->
+        <p>dragging node {{draggableNodeIndex}}</p>
+      </div>
 
   </div>
 </template>
@@ -42,15 +48,7 @@ export default {
   },
   data() {
     return {
-      
-    }
-  },
-  watch: {
-    renderPosition: {
-      handler: function(val) {
-        console.log(JSON.stringify(val))
-      },
-      deep: true
+      draggableNodeIndex: undefined,
     }
   },
   computed: {
@@ -76,6 +74,7 @@ export default {
     ...mapMutations([
       'addToPolyline',
       'reverseRenderOrder',
+      'moveNode'
     ]),
     ...mapActions([
       'updateRenderOrder'
@@ -83,9 +82,11 @@ export default {
     getPointer: function(event) {
       return this.FabricWrapper.fabricApp.getPointer(event)
     },
-    moveNode: function(node, event) {
-      console.log("moveNode", node)
-      console.log("moveNode", event)
+    // I guess all of this should be done with canvas events
+    // just much easier to do it ourself
+    checkAndMoveNode: function(node, event) {
+      // console.log("checkAndMoveNode", node)
+      // console.log("checkAndMoveNode", event)
     }
   },
   mounted() {
@@ -95,8 +96,25 @@ export default {
     // Determine the width and height of the renderer wrapper element.
    
     this.EventBus.$on('mouse:down', (event) => {
-      // console.log('mouse down on canvas ', event)
-      // this.addToPolyline(this.getPointer(event.e))
+      console.log('mouse down on canvas ', event)
+      if (event && event.target && event.target.id && event.target.id.indexOf("node") > -1) {
+        this.draggableNodeIndex = event.target.id.split('node-')[1];
+      } else if (event && event.target && event.target.id && event.target.id.indexOf("edge") > -1) {
+        console.log('clicked on vertex')
+      } else {
+        this.addToPolyline(this.getPointer(event.e))
+      }
+    })
+
+    this.EventBus.$on('mouse:move', (event) => {
+      if (this.draggableNodeIndex) {
+        const pointer = this.getPointer(event.e)
+        this.moveNode({index: this.draggableNodeIndex, pointer: pointer})
+      }
+    })
+
+    this.EventBus.$on('mouse:up', (event) => {
+      this.draggableNodeIndex = undefined;
     })
   },
 }
@@ -106,6 +124,12 @@ export default {
 canvas {
   width: 100%;
   height: calc(100% - 40px);
+}
+
+.debug {
+  position: absolute;
+  /*top: 0;*/
+
 }
 
 .selection-status-header {

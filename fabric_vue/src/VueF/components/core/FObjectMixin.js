@@ -11,25 +11,29 @@ export default {
     }
   },
   props: {
+  	id: {
+		default: "none",
+		type: String
+  	},
   	left: {
-      default: 0,
-      type: Number
+		default: 0,
+		type: Number
     },
     top: {
-      default: 0,
-      type: Number
+		default: 0,
+		type: Number
     },
     width: {
-      default: 0,
-      type: Number
+		default: 0,
+		type: Number
     },
     height: {
-      default: 0,
-      type: Number
+		default: 0,
+		type: Number
     },
     fill: {
-      default: "black",
-      type: String
+		default: "black",
+		type: String
     },
     selectable: {
     	default: false,
@@ -65,6 +69,7 @@ export default {
   	if (!this.FabricWrapper.ready) {
   		this.EventBus.$on('ready', () => {
   			this.createObject();
+  			this.afterCreateObject();
   			this.FabricWrapper.fabricApp.add(this.fObj);
   			// console.log(this.drawingIndex)
   			this.moveInDrawingIndex(this.drawingIndex)
@@ -73,6 +78,7 @@ export default {
   		})
   	} else {
   		this.createObject();
+  		this.afterCreateObject();
   		this.FabricWrapper.fabricApp.add(this.fObj);
 		this.moveInDrawingIndex(this.drawingIndex)
   		this.fRender()
@@ -80,6 +86,9 @@ export default {
   	}
   },
   methods: {
+  	afterCreateObject: function() {
+		this.fObj.id = this.id
+  	},
   	mouseMoveHandler: function(event) {
   		console.log("mouseMove", event)
   	},
@@ -99,11 +108,10 @@ export default {
   	attachEventHandlers: function() {
   		let self = this
   		console.log("attaching event handlers", this.$listeners)
-  		if (this.$listeners.mouseDown) {
+  		if (this.$listeners.mouseMove) {
   			console.log("attaching")
-	  		this.fObj.on('mousedown', function(event) {
-			  console.log("mouse:down");
-			  self.$emit('mouseDown', event)
+	  		this.fObj.on('mousemove', function(event) {
+			  self.$emit('mouseMove', event)
 			});
 			console.log(this.fObj)
   		}

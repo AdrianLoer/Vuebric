@@ -46,12 +46,7 @@ const state = {
   ],
   canvasElements: {
     clickedLocations: [
-      { x: 10, y: 10 },
-      { x: 50, y: 30 },
-      { x: 40, y: 70 },
-      { x: 60, y: 50 },
-      { x: 100, y: 150 },
-      { x: 40, y: 100 }
+      // { x: 10, y: 10 },
     ],
     renderOrder: {
       typeOrder: ['nodes', 'edges'],
@@ -98,6 +93,11 @@ const mutations = {
       Vue.set(state.canvasElements.renderOrder.counters, state.canvasElements.renderOrder.typeOrder[i], 1000 * i)
     }
     // console.log(state.canvasElements.renderOrder)
+  },
+  moveNode: (state, {index, pointer}) => {
+    // console.log(`moveNode ${index} to pos ${pointer.x} | ${pointer.y}`)
+    state.canvasElements.clickedLocations[index].x = pointer.x
+    state.canvasElements.clickedLocations[index].y = pointer.y
   }
 }
 
