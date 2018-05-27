@@ -73,7 +73,12 @@ const getters = {
 const mutations = {
   addToPolyline: (state, newPoint) => {
     console.log(`addToPolyline x: ${newPoint.x} y: ${newPoint.y}`)
-    state.canvasElements.clickedLocations.push(newPoint);
+    state.canvasElements.clickedLocations.push({x: newPoint.x, y: newPoint.y, stroke: "black"});
+  },
+  insertToPolyline: (state, {newPoint, index1, index2}) => {
+    console.log(`insertToPolyline x: ${newPoint.x} y: ${newPoint.y} index1 ${index1} index2 ${index2}`)
+    state.canvasElements.clickedLocations.splice(index2, 0, {x: newPoint.x, y: newPoint.y, stroke: "black"});
+    // Vue.set(state.canvasElements.clickedLocations, index2, {x: newPoint.x, y: newPoint.y, stroke: "black"})
   },
   reverseRenderOrder: (state) => {
     state.canvasElements.renderOrder.typeOrder = state.canvasElements.renderOrder.typeOrder.slice().reverse()

@@ -10,22 +10,25 @@
       :left="node.x" 
       :top="node.y" 
       :drawingIndex="renderPosition.counters['nodes']"
-      ></f-circle>
+      >        
+    </f-circle>
 
     <f-line
       v-for="segment in lineSegments" 
       :id="'edge'"
-      :lineCoords="segment" 
+      :lineCoords="segment.lineCoords" 
       :drawingIndex="renderPosition.counters['edges']"
-      ></f-line>
+      >  
+    </f-line>
 
-      <f-line
+    <f-line
       v-for="segment in sortedDistances"
-      :lineCoords="segment"
+      :lineCoords="segment.lineCoords"
       :stroke="'red'"
-      :drawingIndex="renderPosition.counters['debug-lines']"
+      :drawingIndex="0"
+      :evented="false"
       >
-      </f-line>
+    </f-line>
 
       <div class="debug">
         <button @click="updateRenderOrder">reverse render order</button>
@@ -70,12 +73,15 @@ export default {
     lineSegments: function() {
       let segments = [];
       for (let i = 0; i < this.canvasElements.clickedLocations.length - 1; i++) {
-        segments.push([
+        segments.push({
+          index1: i,
+          index2: i + 1,
+          lineCoords: [
           this.canvasElements.clickedLocations[i].x,
           this.canvasElements.clickedLocations[i].y,
           this.canvasElements.clickedLocations[i + 1].x,
           this.canvasElements.clickedLocations[i + 1].y
-          ])
+          ]})
       }
       return segments
     },
@@ -83,12 +89,14 @@ export default {
       const sorted = this.calculatedDistances.sort(function(a, b) {
         return a.dist - b.dist;
       })
-      return sorted.map((item) => {return [item.x1, item.y1, item.x2, item.y2]}).slice(0, 10)
-    }
+      return sorted
+      // return sorted.map((item) => {return [item.x1, item.y1, item.x2, item.y2]}).slice(0, 10)
+    },
 	},
   methods: {
     ...mapMutations([
       'addToPolyline',
+      'insertToPolyline',
       'reverseRenderOrder',
       'moveNode'
     ]),
@@ -104,12 +112,17 @@ export default {
       // console.log("checkAndMoveNode", node)
       // console.log("checkAndMoveNode", event)
     },
-    calculateDistances: function(pointer) {
+    calculateDistances: function(pointer, threshold) {
+      threshold = threshold || Number.MAX_VALUE
       let r = []
       for (let i = 0; i < this.lineSegments.length; i++) {
         const seg = this.lineSegments[i];
-        const dist = this.pDistance(pointer.x, pointer.y, seg[0], seg[1], seg[2], seg[3])
-        r.push(dist)
+        const pointLineObject = this.pDistance(pointer.x, pointer.y, seg.lineCoords[0], seg.lineCoords[1], seg.lineCoords[2], seg.lineCoords[3])
+        pointLineObject.index1 = seg.index1
+        pointLineObject.index2 = seg.index2
+        if (pointLineObject.dist < threshold) {
+          r.push(pointLineObject)
+        }
       }
       return r;
     },
@@ -163,11 +176,25 @@ export default {
       console.log('mouse down on canvas ', event)
       if (event && event.target && event.target.id && event.target.id.indexOf("node") > -1) {
         this.draggableNodeIndex = event.target.id.split('node-')[1];
-      } else if (event && event.target && event.target.id && event.target.id.indexOf("edge") > -1) {
-        console.log('clicked on vertex')
-        // const this.calculateDistances(this.getPointer(event.e))
+      // } else if (event && event.target && event.target.id && event.target.id.indexOf("edge") > -1) {
+        // console.log('clicked on vertex')
+        
       } else {
-        this.addToPolyline(this.getPointer(event.e))
+        this.calculatedDistances = this.calculateDistances(this.getPointer(event.e), 20)
+        if (this.sortedDistances.length > 0) {
+          console.log('clicked near a vertex')
+          console.log(this.sortedDistances)
+          this.insertToPolyline({
+            newPoint: {
+              x: this.sortedDistances[0].x2,
+              y: this.sortedDistances[0].y2
+            },
+            index1: this.sortedDistances[0].index1,
+            index2: this.sortedDistances[0].index2
+          })
+        } else {
+          this.addToPolyline(this.getPointer(event.e))
+        }
       }
     })
 
@@ -176,7 +203,7 @@ export default {
         const pointer = this.getPointer(event.e)
         this.moveNode({index: this.draggableNodeIndex, pointer: pointer})
       } else {
-        this.calculatedDistances = this.calculateDistances(this.getPointer(event.e))
+        // this.calculatedDistances = this.calculateDistances(this.getPointer(event.e))
 
       }
     })

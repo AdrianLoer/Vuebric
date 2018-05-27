@@ -46,20 +46,28 @@ export default {
     drawingIndex: {
     	default: 0,
     	type: Number
+    },
+    evented: {
+    	default: true,
+    	type: Boolean
     }
   },
   watch: {
 	  left: function(newVal) {
 	    this.fUpdate('left', newVal)
+	    this.fCoords()
 	  },
 	  top: function(newVal) {
 	    this.fUpdate('top', newVal)
+	    this.fCoords()
 	  },
 	  width: function(newVal) {
 	    this.fUpdate('width', newVal)
+	    this.fCoords()
 	  },
 	  height: function(newVal) {
 	    this.fUpdate('height', newVal)
+	    this.fCoords()
 	  },
 	  fill: function(newVal) {
 	    this.fUpdate('fill', newVal)
@@ -108,20 +116,23 @@ export default {
   		this.fObj.set(key, val)
   		this.fRender()
   	},
+  	fCoords: function() {
+  		this.fObj.setCoords()
+  	},
   	moveInDrawingIndex: function(newIndex) {
   		this.fObj.moveTo(newIndex)
   		this.fRender()
   	},
   	attachEventHandlers: function() {
-  		let self = this
-  		console.log("attaching event handlers", this.$listeners)
-  		if (this.$listeners.mouseMove) {
-  			console.log("attaching")
-	  		this.fObj.on('mousemove', function(event) {
-			  self.$emit('mouseMove', event)
-			});
-			console.log(this.fObj)
-  		}
+  	// 	let self = this
+  	// 	console.log("attaching event handlers", this.$listeners)
+  	// 	if (this.$listeners.mouseMove) {
+  	// 		console.log("attaching")
+	  // 		this.fObj.on('mousemove', function(event) {
+			//   self.$emit('mouseMove', event)
+			// });
+			// console.log(this.fObj)
+  	// 	}
   	}
   }
 }

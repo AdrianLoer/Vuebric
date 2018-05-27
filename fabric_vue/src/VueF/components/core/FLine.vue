@@ -41,7 +41,8 @@ export default {
         stroke: this.stroke,
         originX: 'center',
         originY: 'center',
-        selectable: this.selectable
+        selectable: this.selectable,
+        evented: this.evented
       });
     }
   }
