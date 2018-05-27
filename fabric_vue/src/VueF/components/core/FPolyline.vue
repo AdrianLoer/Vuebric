@@ -22,7 +22,7 @@ export default {
       this.FabricWrapper.fabricApp.remove(this.fObj);
            var obj = this.fObj.toObject();
            delete obj.top;
-           // delete obj.left;
+           delete obj.left;
            this.fObj = new fabric.Polyline(this.points, obj);
       //      console.log(this.fObj)
            this.FabricWrapper.fabricApp.add(this.fObj);
@@ -45,7 +45,7 @@ export default {
                 perPixelTargetFind: true,
                 // top: 0,
                 // left: 0,
-                strokeWidth: 2
+                strokeWidth: 1
               })
          // this.create()
         // this.fObj = new fabric.Polyline(this.points, {
