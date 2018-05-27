@@ -44,10 +44,10 @@ export default {
     // }
 
     // self.FabricWrapper.fabricApp.renderAll();
-
+    
+    this.FabricWrapper.ready = true;
     this.EventBus.$emit('ready');
     // ? not used?
-    // this.FabricWrapper.ready = true;
 
     // set up event handlers
 

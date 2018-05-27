@@ -1,7 +1,9 @@
 <template>
   <div>
-    <f-polyline :points="canvasElements.polyline"></f-polyline>
-    <f-rect :left="canvasElements.polyline[canvasElements.polyline.length - 1].x" :top="canvasElements.polyline[canvasElements.polyline.length - 1].y"></f-rect>
+    <!-- <f-polyline :points="canvasElements.polyline"></f-polyline> -->
+    <!-- <f-rect :left="canvasElements.polyline[canvasElements.polyline.length - 1].x" :top="canvasElements.polyline[canvasElements.polyline.length - 1].y"></f-rect> -->
+    <!-- <f-circle :left="canvasElements.polyline[canvasElements.polyline.length - 1].x" :top="canvasElements.polyline[canvasElements.polyline.length - 1].y"></f-circle> -->
+    <f-circle v-for="node in canvasElements.polyline" :left="node.x" :top="node.y"></f-circle>
   </div>
 </template>
 
@@ -10,14 +12,16 @@ import Vue from 'vue';
 import { mapGetters, mapActions, mapMutations } from 'vuex'
 import {fabric} from 'fabric'
 
-import FRect from '../VueF/components/core/FRect';
+// import FRect from '../VueF/components/core/FRect';
+import FCircle from '../VueF/components/core/FCircle';
 import FPolyline from '../VueF/components/core/FPolyline';
 
 export default {
   inject: ['EventBus', 'FabricWrapper'],
   components: {
     FPolyline,
-    FRect
+    // FRect,
+    FCircle
   },
   data() {
     return {

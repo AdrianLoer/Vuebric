@@ -30,30 +30,51 @@ export default {
     fill: {
       default: "black",
       type: String
+    },
+    selectable: {
+    	default: false,
+    	type: Boolean
     }
   },
   watch: {
 	  left: function(newVal) {
-	    // console.log("left changed in mixin", newVal)
+	    this.fUpdate('left', newVal)
 	  },
-	  top: function() {
-	   
+	  top: function(newVal) {
+	    this.fUpdate('top', newVal)
 	  },
-	  width: function() {
-	    
+	  width: function(newVal) {
+	    this.fUpdate('width', newVal)
 	  },
-	  height: function() {
-	    
+	  height: function(newVal) {
+	    this.fUpdate('height', newVal)
 	  },
-	  fill: function() {
-	    
+	  fill: function(newVal) {
+	    this.fUpdate('fill', newVal)
 	  }
+  },
+  created() {
+  	if (!this.FabricWrapper.ready) {
+  		this.EventBus.$on('ready', () => {
+  			this.createObject();
+  			this.FabricWrapper.fabricApp.add(this.fObj);
+  			this.fRender()
+  		})
+  	} else {
+  		this.createObject();
+  		this.FabricWrapper.fabricApp.add(this.fObj);
+  		this.fRender()
+  	}
   },
   methods: {
   	fRender: function() {
   		console.log("fRender")
   		// this.FabricWrapper.fabricApp.add(this.fObj);
   		this.FabricWrapper.fabricApp.requestRenderAll();
+  	},
+  	fUpdate: function(key, val) {
+  		this.fObj.set(key, val)
+  		this.fRender()
   	}
   }
 }
