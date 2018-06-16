@@ -21,22 +21,21 @@
       >  
     </f-line>
 
-    <f-line
+ <!--    <f-line
       v-for="segment in sortedDistances"
       :lineCoords="[segment.x1, segment.y1, segment.x2, segment.y2]"
       :stroke="'red'"
       :drawingIndex="0"
       :evented="false"
       >
-    </f-line>
+    </f-line> -->
 
-      <div class="debug">
+<!--       <div class="debug">
         <button @click="updateRenderOrder">reverse render order</button>
-        <!-- {{renderPosition.counters}} -->
         <p>dragging node {{draggableNodeIndex}}</p>
         {{sortedDistances}}
       </div>
-
+ -->
   </div>
 </template>
 

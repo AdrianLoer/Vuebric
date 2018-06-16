@@ -10,8 +10,8 @@ export default {
       default: 400,
       type: Number
     },
-    copycss: {
-      defualt: false,
+    syncDimensions: {
+      default: true,
       type: Boolean
     }
   },
@@ -31,8 +31,8 @@ export default {
     const renderCanvas = document.createElement('canvas');
     this.$el.appendChild(renderCanvas)
     // const renderCanvas = this.$refs.renderCanvas;
-    const canvasWidth = this.copycss ? this.$el.offsetWidth : this.width;
-    const canvasHeight = this.copycss ? this.$el.offsetHeight : this.height;
+    const canvasWidth = this.syncDimensions ? this.$el.offsetWidth : this.width;
+    const canvasHeight = this.syncDimensions ? this.$el.offsetHeight : this.height;
     this.FabricWrapper.fabricApp = new fabric.Canvas(renderCanvas, {
       renderOnAddRemove: false,
       selection: false,
@@ -59,15 +59,16 @@ export default {
     // set up event handlers
 
     this.FabricWrapper.fabricApp.on('mouse:down', function(options) {
-      self.EventBus.$emit('mouse:down', options)
+      // self.EventBus.$emit('mouse:down', options)
     });
 
     this.FabricWrapper.fabricApp.on('mouse:move', function(options) {
-      self.EventBus.$emit('mouse:move', options)
+      console.log("mousemove canvas")
+      // self.EventBus.$emit('mouse:move', options)
     });
 
     this.FabricWrapper.fabricApp.on('mouse:up', function(options) {
-      self.EventBus.$emit('mouse:up', options)
+      // self.EventBus.$emit('mouse:up', options)
     });
 
 

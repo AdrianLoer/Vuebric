@@ -1,20 +1,5 @@
 <template>
   <div class="fabric-renderer">
-    <!-- <div class="selection-status-header" v-bind:class="{ active: isSelecting }"></div> -->
-    <!-- <canvas ref="renderCanvas"></canvas> -->
-    <!-- <CRenderContainer :containerElements="canvasElementsRoot"/> -->
-    <!-- <f-rect></f-rect> -->
-<!--     <f-rect
-      :left="selectionBoundingBoxRect.left"
-      :top="selectionBoundingBoxRect.top"
-      :width="selectionBoundingBoxRect.width"
-      :height="selectionBoundingBoxRect.height"
-      :fill="selectionBoundingBoxRect.fill"
-    >
-    </f-rect> -->
-
-
-    <!-- <f-polyline :points="canvasElements.polyline"></f-polyline> -->
     <slot></slot>
   </div>
 </template>
@@ -55,7 +40,10 @@ export default {
       // 'updateSelectionBoundingBox',
       // 'toggleSelectionDrag'
       'addToPolyline'
-    ])
+    ]),
+    mousemove: function(event) {
+      console.log("event canvas ", event)
+    }
   },
   // Allows descendants to inject everything.
   provide() {

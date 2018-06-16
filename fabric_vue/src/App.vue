@@ -1,12 +1,14 @@
 <template>
   <div id="app">
     <!-- <f-canvas @c-click="addPointToPolygon"> -->
-    <f-canvas :copycss="true">
+    <!-- <f-canvas :copycss="true"> -->
+      <!-- <path-selector></path-selector> -->
+      <!-- <bounding-box-selector></bounding-box-selector> -->
+    <!-- </f-canvas> -->
+<!--     <f-canvas :copycss="true">
       <path-selector></path-selector>
-    </f-canvas>
-    <f-canvas :copycss="true">
-      <path-selector></path-selector>
-    </f-canvas>
+    </f-canvas> -->
+    <scene-container></scene-container>
   </div>
 </template>
 
@@ -14,14 +16,18 @@
 
 import { mapGetters, mapActions, mapMutations } from 'vuex'
 
-import FCanvas from './VueF/components/FCanvas'
-import PathSelector from './components/PathSelector';
+import SceneContainer from './components/SceneContainer'
+
+
+// import FCanvas from './VueF/components/FCanvas'
+// import PathSelector from './components/PathSelector';
 
 export default {
   name: 'app',
   components: {
-    FCanvas,
-    PathSelector
+    // FCanvas,
+    // PathSelector
+    SceneContainer
   },
 }
 </script>
@@ -38,4 +44,6 @@ body {
   color: #2c3e50;
   /*margin-top: 60px;*/
 }
+
+
 </style>
