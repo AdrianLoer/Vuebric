@@ -9,6 +9,9 @@ import Vue from 'vue';
 import { mapGetters, mapActions, mapMutations } from 'vuex'
 import {fabric} from 'fabric'
 
+import SceneContainerLayerMixin from '../../components/SceneContainerLayerMixin'
+import FCanvasController from './FCanvasController'
+
 import FCanvasMixin from './FCanvasMixin'
 
 // import CRenderContainer from './CRenderContainer'
@@ -16,7 +19,7 @@ import FRect from './core/FRect';
 import FPolyline from './core/FPolyline';
 
 export default {
-  mixins: [FCanvasMixin],
+  mixins: [FCanvasMixin, SceneContainerLayerMixin],
   components: {
     // CRenderContainer,
     FRect,
@@ -57,7 +60,8 @@ export default {
     console.log("component mounted")
     // this.test()
     // Determine the width and height of the renderer wrapper element.
-   
+    console.log(this.FabricWrapper.fabricApp)
+    this.controller = new FCanvasController(this.FabricWrapper.fabricApp)
 
   }
 }

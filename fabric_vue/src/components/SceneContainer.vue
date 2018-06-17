@@ -5,7 +5,7 @@
       
     </div-layer> -->
 
-    <f-canvas :syncDimensions="true" ref="test2" id="test">
+    <f-canvas :syncDimensions="true" ref="canvasLayer">
 
       <path-selector :interaction-enabled="true"></path-selector>
 
@@ -17,6 +17,7 @@
 <script>
 import Vue from 'vue';
 import { mapGetters, mapActions, mapMutations } from 'vuex'
+
 import FCanvas from '../VueF/components/FCanvas';
 import DivLayer from './DivLayer';
 
@@ -46,11 +47,13 @@ export default {
     var self = this
     this.$el.addEventListener('mousedown', function(event) {
       event.stopPropagation()
+      let target = self.$refs.canvasLayer.getController().findTarget(event)
+      console.log("target", target)
       self.EventBus.$emit('mouse:down', event)
       console.log("mousedown container", event)
       // self.$refs.test.mousemove(event)
-      let new_e = new event.constructor(event.type, event);
-      document.getElementById('test').dispatchEvent(new_e)
+      // let new_e = new event.constructor(event.type, event);
+      // document.getElementById('test').dispatchEvent(new_e)
       // self.$refs.test2.mousedown(event)
     }, true);
 

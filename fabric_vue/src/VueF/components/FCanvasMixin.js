@@ -60,8 +60,8 @@ export default {
     // set up event handlers
 
     this.FabricWrapper.fabricApp.on('mouse:down', function(options) {
-      console.log("mousedown canvas", options)
-      options.e.stopPropagation()
+      // console.log("mousedown canvas", options)
+      // options.e.stopPropagation()
       // self.EventBus.$emit('mouse:down', options)
     });
 

@@ -179,6 +179,7 @@ export default {
     // Determine the width and height of the renderer wrapper element.
    
     this.EventBus.$on('mouse:down', (event) => {
+      
       // console.log('mouse down on canvas ', event)
       if (event && event.target && event.target.id && event.target.id.indexOf("node") > -1) {
         this['interactionState/setMouseDown']("asd")
