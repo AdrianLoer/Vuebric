@@ -3,6 +3,7 @@ import Vue from 'vue/dist/vue.js';
 import Vuex from "vuex";
 import axios from "axios";
 import {FGroup, FRect} from './VueF/VueF';
+import userInteractionModule from './sceneInteraction/userInteractionModule'
 
 Vue.use(Vuex);
 
@@ -134,6 +135,9 @@ const actions = {
 }
 
 export default new Vuex.Store({
+  modules: {
+    userInteraction: userInteractionModule
+  },
   state,
   getters,
   actions,

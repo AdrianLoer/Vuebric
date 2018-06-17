@@ -57,6 +57,12 @@ export default {
     FCircle,
     FLine
   },
+  props: {
+    interactionEnabled: {
+      default: false,
+      type: Boolean
+    },
+  },
   data() {
     return {
       draggableNodeIndex: undefined,

@@ -1,6 +1,7 @@
 <template>
   <div class="div-layer">
     <div class="div-test">CLICK</div>
+    <img src="https://i.imgur.com/KoTm5y8.jpg" class="div-image"></img>
   </div>
 </template>
 
@@ -19,9 +20,9 @@ export default {
   },
   mounted() {
     console.log("div layer mounted")
-    this.$el.addEventListener('mousemove', function(event) {
-      console.log("mousemove div", event)
-    }, false);
+    // this.$el.addEventListener('mousemove', function(event) {
+    //   console.log("mousemove div", event)
+    // }, false);
   },
   methods: {
     mousemove: function(event) {
@@ -32,23 +33,32 @@ export default {
 </script>
 
 <style scoped>
+
 .div-layer {
   background-color: yellow;
   width: inherit;
   height: inherit;
-  position: absolute;
+  /*transform: scale(2) translateX(100px);*/
 }
 
 .div-test {
   width: 100px;
   height: 100px;
   background-color: #CF6EEA;
+  /*https://i.imgur.com/KoTm5y8.jpg*/
   top: 100px;
   left: 100px;
-  position: relative;
+  position: absolute;
 }
+
 
 .div-test:hover {
   background-color: blue;
 }
+
+.div-image {
+  width: 100%;
+  height: auto;
+}
+
 </style>

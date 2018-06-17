@@ -22,6 +22,8 @@ import DivLayer from './DivLayer';
 
 import PathSelector from './PathSelector';
 
+import CreateBoxController from '../sceneInteraction/CreateBoxController'
+
 export default {
   components: {
     FCanvas,
@@ -30,7 +32,7 @@ export default {
   },
   data() {
     return {
-     
+     interactionControllers: []
     }
   },
   computed: {
@@ -38,17 +40,6 @@ export default {
           // 'canvasElements'
 	    // ])
 	},
-  methods: {
-    // ...mapMutations([
-      // 'addToPolyline'
-    // ])
-  },
-  provide() {
-    return {
-      // FabricWrapper: this.FabricWrapper,
-      // EventBus: this.EventBus
-    }
-  },
   mounted() {
     console.log("scene container mounted", this.$el)
     var self = this
@@ -58,7 +49,24 @@ export default {
       self.$refs.test.mousemove(event)
       self.$refs.test2.mousemove(event)
     }, true);
-  }
+
+
+
+
+  },
+  methods: {
+    // ...mapMutations([
+      // 'addToPolyline'
+    // ])
+    CreateBoxController
+  },
+  provide() {
+    return {
+      // FabricWrapper: this.FabricWrapper,
+      // EventBus: this.EventBus
+    }
+  },
+  
 }
 </script>
 
@@ -72,6 +80,7 @@ canvas {
 .scene-container {
   width: 50vw;
   height: 50vh;
-  border: 10px solid purple;
+  /*border: 10px solid purple;*/
+  overflow: hidden;
 }
 </style>
