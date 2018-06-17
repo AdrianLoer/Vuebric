@@ -136,7 +136,7 @@ const actions = {
 
 export default new Vuex.Store({
   modules: {
-    userInteraction: userInteractionModule
+    interactionState: userInteractionModule
   },
   state,
   getters,

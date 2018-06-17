@@ -1,6 +1,7 @@
 import Vue from 'vue';
 
 export default {
+  inject: ['EventBus'],
   props: {
     width: {
       default: 400,
@@ -23,7 +24,7 @@ export default {
           ready: false,
         },
         // used for ready events
-        EventBus: new Vue()
+        // EventBus: new Vue()
     }
   },
   mounted() {
@@ -59,11 +60,12 @@ export default {
     // set up event handlers
 
     this.FabricWrapper.fabricApp.on('mouse:down', function(options) {
+      console.log("mousedown canvas", options)
+      options.e.stopPropagation()
       // self.EventBus.$emit('mouse:down', options)
     });
 
     this.FabricWrapper.fabricApp.on('mouse:move', function(options) {
-      console.log("mousemove canvas")
       // self.EventBus.$emit('mouse:move', options)
     });
 

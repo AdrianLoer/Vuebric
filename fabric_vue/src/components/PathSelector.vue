@@ -103,7 +103,8 @@ export default {
       'addToPolyline',
       'insertToPolyline',
       'reverseRenderOrder',
-      'moveNode'
+      'moveNode',
+      'interactionState/setMouseDown'
     ]),
     ...mapActions([
       'updateRenderOrder'
@@ -178,8 +179,9 @@ export default {
     // Determine the width and height of the renderer wrapper element.
    
     this.EventBus.$on('mouse:down', (event) => {
-      console.log('mouse down on canvas ', event)
+      // console.log('mouse down on canvas ', event)
       if (event && event.target && event.target.id && event.target.id.indexOf("node") > -1) {
+        this['interactionState/setMouseDown']("asd")
         this.draggableNodeIndex = event.target.id.split('node-')[1];
       // } else if (event && event.target && event.target.id && event.target.id.indexOf("edge") > -1) {
         // console.log('clicked on vertex')
@@ -204,13 +206,14 @@ export default {
     })
 
     this.EventBus.$on('mouse:move', (event) => {
-      if (this.draggableNodeIndex) {
-        const pointer = this.getPointer(event.e)
-        this.moveNode({index: this.draggableNodeIndex, pointer: pointer})
-      } else {
-        this.calculatedDistances = this.calculateDistances(this.getPointer(event.e))
+      console.log("move")
+      // if (this.draggableNodeIndex) {
+      //   const pointer = this.getPointer(event.e)
+      //   this.moveNode({index: this.draggableNodeIndex, pointer: pointer})
+      // } else {
+      //   this.calculatedDistances = this.calculateDistances(this.getPointer(event.e))
 
-      }
+      // }
     })
 
     this.EventBus.$on('mouse:up', (event) => {

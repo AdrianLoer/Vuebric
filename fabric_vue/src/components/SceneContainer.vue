@@ -1,13 +1,13 @@
 <template>
   <div class="scene-container">
-
+<!-- 
     <div-layer :syncDimensions="true" ref="test">
       
-    </div-layer>
+    </div-layer> -->
 
-    <f-canvas :syncDimensions="true" ref="test2">
+    <f-canvas :syncDimensions="true" ref="test2" id="test">
 
-      <path-selector></path-selector>
+      <path-selector :interaction-enabled="true"></path-selector>
 
     </f-canvas>
  
@@ -32,7 +32,8 @@ export default {
   },
   data() {
     return {
-     interactionControllers: []
+     interactionControllers: [],
+     EventBus: new Vue()
     }
   },
   computed: {
@@ -43,11 +44,24 @@ export default {
   mounted() {
     console.log("scene container mounted", this.$el)
     var self = this
+    this.$el.addEventListener('mousedown', function(event) {
+      event.stopPropagation()
+      self.EventBus.$emit('mouse:down', event)
+      console.log("mousedown container", event)
+      // self.$refs.test.mousemove(event)
+      let new_e = new event.constructor(event.type, event);
+      document.getElementById('test').dispatchEvent(new_e)
+      // self.$refs.test2.mousedown(event)
+    }, true);
+
     this.$el.addEventListener('mousemove', function(event) {
       event.stopPropagation()
-      console.log("mousemove container", event)
-      self.$refs.test.mousemove(event)
-      self.$refs.test2.mousemove(event)
+      self.EventBus.$emit('mouse:move', event)
+    }, true);
+
+    this.$el.addEventListener('mouseup', function(event) {
+      event.stopPropagation()
+      self.EventBus.$emit('mouse:up', event)
     }, true);
 
 
@@ -63,7 +77,7 @@ export default {
   provide() {
     return {
       // FabricWrapper: this.FabricWrapper,
-      // EventBus: this.EventBus
+      EventBus: this.EventBus
     }
   },
   
@@ -80,7 +94,7 @@ canvas {
 .scene-container {
   width: 50vw;
   height: 50vh;
-  /*border: 10px solid purple;*/
+  border: 10px solid purple;
   overflow: hidden;
 }
 </style>

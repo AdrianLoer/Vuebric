@@ -6,7 +6,8 @@ Vue.use(Vuex);
 
 const state = {
   mouseDown: false,
-  boxCreationActive: false
+  boxCreationActive: false,
+  circleHover: false
 }
 
 const getters = {
@@ -14,9 +15,16 @@ const getters = {
   //   console.log(state.canvasElements.renderOrder)
   //   return state.canvasElements.renderOrder
   // },
+  // nextClickShouldStartBoxCreation: state => {
+  //   return !this.circleHover
+  // }
 }
 
 const mutations = {
+  setMouseDown: (state, payload) => {
+    console.log('setMouseDown', payload)
+    state.mouseDown = payload
+  }
   // addToPolyline: (state, newPoint) => {
   //   console.log(`addToPolyline x: ${newPoint.x} y: ${newPoint.y}`)
   //   state.canvasElements.clickedLocations.push({x: newPoint.x, y: newPoint.y, stroke: "black"});

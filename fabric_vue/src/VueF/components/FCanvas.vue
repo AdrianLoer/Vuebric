@@ -49,7 +49,7 @@ export default {
   provide() {
     return {
       FabricWrapper: this.FabricWrapper,
-      EventBus: this.EventBus
+      // EventBus: this.EventBus
     }
   },
 
@@ -85,6 +85,6 @@ canvas {
 .fabric-renderer {
   width: 50vw;
   height: 50vh;
-  border: 1px solid blue;
+  /*border: 1px solid blue;*/
 }
 </style>
