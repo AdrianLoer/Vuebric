@@ -2,6 +2,7 @@
   <div>
     <f-rect
       v-for="(rect, key) in rects"
+      :key="key"
       :tid="key"
       :left="rect.left"
       :top="rect.top" 
@@ -9,8 +10,8 @@
       :height="rect.height" 
       :objectCaching="false"
       :strokeWidth="2"
-      :drawingIndex="100 + rect.drawingIndex"
-      :fill="rect.shouldBeHighlighted ? 'rgba(200,240,200,0.9)' : 'rgba(200,240,200,0.5)'"
+      :drawingIndex="rect.highlighted ? 10000 : 100 + rect.drawingIndex"
+      :fill="rect.highlighted ? 'rgba(100,140,100,0.9)' : 'rgba(200,240,200,0.5)'"
     ></f-rect>
 <!--     <f-circle
       v-for="(node, index) in canvasElements.clickedLocations"
@@ -80,6 +81,7 @@ export default {
       'setTemporaryCreationRectangle',
       'startTemporaryRectangleCreation',
       'stopTemporaryRectangleCreation',
+      'toggleHighlightedRectTid'
     ]),
   },
   mounted() {
@@ -100,7 +102,12 @@ export default {
     //   self.startTemporaryRectangleCreation()
     // })
 
+    var self = this
     this.EventBus.$on('mouse:move', (e) => {
+
+      if (self.canvasTarget) {
+        self.toggleHighlightedRectTid(self.canvasTarget.tid)
+      }
 
       // console.log("mouse:move", e)
       // const pointer = self.posInCanvas(e)

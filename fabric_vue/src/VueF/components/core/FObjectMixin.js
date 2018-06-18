@@ -139,6 +139,9 @@ export default {
   		this.fObj.setCoords()
   	},
   	moveInDrawingIndex: function(newIndex) {
+      // might need to do some fancy delete/readd or throttled render queue?
+      // console.log("moveInDrawingIndex", newIndex)
+      // console.log(this.fObj.width)
   		this.fObj.moveTo(newIndex)
   		this.fRender()
   	},

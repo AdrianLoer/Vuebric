@@ -34,7 +34,6 @@ const getters = {
 
 const mutations = {
   setTarget: (state, payload) => {
-    console.log('setTarget', payload)
     state.canvasTarget = payload
   },
   startTemporaryRectangleCreation: (state) => {
@@ -50,13 +49,21 @@ const mutations = {
     const newTID = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
     Vue.set(state.rects, newTID, payload)
     state.rects[newTID].drawingIndex = Object.keys(state.rects).length
+    Vue.set(state.rects[newTID], 'highlighted', false)
   },
   toggleEditableRectIndex: (state, payload) => {
     // const index = 
     // state.rects[payload.at].editActive = payload.to
   },
   toggleHighlightedRectTid: (state, payload) => {
-    // state.rects[payload.at].highlighted = payload.to
+    for (var key in state.rects) {
+        if (state.rects.hasOwnProperty(key)) {
+          Vue.set(state.rects[key], 'highlighted', false)
+        }
+    }
+    if (state.rects[payload]) {
+        Vue.set(state.rects[payload], 'highlighted', true)
+    }
   },
   toggleEditMode: (state, payload) => {
     state.editMode = !state.editMode
