@@ -48,7 +48,7 @@ const mutations = {
   addRect: (state, payload) => {
     const newTID = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
     Vue.set(state.rects, newTID, payload)
-    state.rects[newTID].drawingIndex = Object.keys(state.rects).length
+    Vue.set(state.rects[newTID], 'drawingIndex', Object.keys(state.rects).length)
     Vue.set(state.rects[newTID], 'highlighted', false)
   },
   toggleEditableRectIndex: (state, payload) => {
@@ -59,10 +59,16 @@ const mutations = {
     for (var key in state.rects) {
         if (state.rects.hasOwnProperty(key)) {
           Vue.set(state.rects[key], 'highlighted', false)
+          if (state.rects[key].prevDrawingIndex) {
+            Vue.set(state.rects[key], 'drawingIndex', state.rects[key].prevDrawingIndex)
+            delete state.rects[key].prevDrawingIndex
+          }
         }
     }
     if (state.rects[payload]) {
         Vue.set(state.rects[payload], 'highlighted', true)
+        state.rects[payload].prevDrawingIndex = state.rects[payload].drawingIndex
+        Vue.set(state.rects[payload], 'drawingIndex', 10000)
     }
   },
   toggleEditMode: (state, payload) => {

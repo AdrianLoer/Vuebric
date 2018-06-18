@@ -10,7 +10,7 @@
       :height="rect.height" 
       :objectCaching="false"
       :strokeWidth="2"
-      :drawingIndex="rect.highlighted ? 10000 : 100 + rect.drawingIndex"
+      :drawingIndex="100 + rect.drawingIndex"
       :fill="rect.highlighted ? 'rgba(100,140,100,0.9)' : 'rgba(200,240,200,0.5)'"
     ></f-rect>
 <!--     <f-circle
