@@ -7,7 +7,8 @@
 
     <f-canvas :syncDimensions="true" ref="canvasLayer">
 
-      <path-selector :interaction-enabled="true"></path-selector>
+      <!-- <path-selector :interaction-enabled="true"></path-selector> -->
+      <bb-selector :dimensions="temporaryCreationRectangle"></bb-selector>
 
     </f-canvas>
  
@@ -22,6 +23,7 @@ import FCanvas from '../VueF/components/FCanvas';
 import DivLayer from './DivLayer';
 
 import PathSelector from './PathSelector';
+import BbSelector from './BBSelector';
 
 import CreateBoxController from '../sceneInteraction/CreateBoxController'
 
@@ -29,7 +31,8 @@ export default {
   components: {
     FCanvas,
     DivLayer,
-    PathSelector
+    PathSelector,
+    BbSelector
   },
   data() {
     return {
@@ -38,20 +41,19 @@ export default {
     }
   },
   computed: {
-		// ...mapGetters([
-          // 'canvasElements'
-	    // ])
+		...mapGetters([
+          'temporaryCreationRectangle'
+	    ])
 	},
   mounted() {
     console.log("scene container mounted", this.$el)
     var self = this
     this.$el.addEventListener('mousedown', function(event) {
       event.stopPropagation()
-      let target = self.$refs.canvasLayer.getController().findTarget(event)
-      console.log("target", target)
+      const target = self.findTargetForCanvas(event)
       self.setTarget(target)
       self.EventBus.$emit('mouse:down', event)
-      console.log("mousedown container", event)
+      // console.log("mousedown container", event)
       // self.$refs.test.mousemove(event)
       // let new_e = new event.constructor(event.type, event);
       // document.getElementById('test').dispatchEvent(new_e)
@@ -60,11 +62,15 @@ export default {
 
     this.$el.addEventListener('mousemove', function(event) {
       event.stopPropagation()
+      const target = self.findTargetForCanvas(event)
+      self.setTarget(target)
       self.EventBus.$emit('mouse:move', event)
     }, true);
 
     this.$el.addEventListener('mouseup', function(event) {
       event.stopPropagation()
+      const target = self.findTargetForCanvas(event)
+      self.setTarget(target)
       self.EventBus.$emit('mouse:up', event)
     }, true);
 
@@ -75,7 +81,10 @@ export default {
   methods: {
     ...mapMutations([
       'setTarget'
-    ])
+    ]),
+    findTargetForCanvas: function(event) {
+      return this.$refs.canvasLayer.getController().findTarget(event)
+    },
   },
   provide() {
     return {
@@ -99,5 +108,6 @@ canvas {
   height: 50vh;
   border: 10px solid purple;
   overflow: hidden;
+  margin-top: 200px;
 }
 </style>

@@ -50,6 +50,14 @@ export default {
     evented: {
     	default: true,
     	type: Boolean
+    },
+    objectCaching: {
+      default: true,
+      type: Boolean
+    },
+    strokeWidth: {
+      default: 1,
+      type: Number
     }
   },
   watch: {
@@ -78,7 +86,13 @@ export default {
 	  drawingIndex: function(newVal) {
 	  	// console.log("drawingIndex ", newVal)
 	  	this.moveInDrawingIndex(newVal)
-	  }
+	  },
+    objectCaching: function(newVal) {
+      this.fUpdate('objectCaching', newVal)
+    },
+    strokeWidth: function(newVal) {
+      this.fUpdate('strokeWidth', newVal)
+    }
   },
   created() {
   	if (!this.FabricWrapper.ready) {
@@ -99,6 +113,11 @@ export default {
   		this.fRender()
   		this.attachEventHandlers()
   	}
+  },
+
+  beforeDestroy() {
+    this.FabricWrapper.fabricApp.remove(this.fObj);
+    this.fRender();
   },
   methods: {
   	afterCreateObject: function() {

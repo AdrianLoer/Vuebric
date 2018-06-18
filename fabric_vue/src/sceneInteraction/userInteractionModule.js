@@ -5,10 +5,15 @@ const state = {
   boxCreationActive: false,
   circleHover: false,
   canvasTarget: null,
+  temporaryCreationRectangle: {left: 100, top: 100, width: 200, height: 200},
+  temporaryCreationRectangleActive: false,
 }
 
 const getters = {
   canvasTarget: state => state.canvasTarget,
+  temporaryCreationRectangle: state => state.temporaryCreationRectangle,
+  temporaryCreationRectangleActive: state => state.temporaryCreationRectangleActive,
+
   // why?
   // test: state => {
   //   return function() {
@@ -32,7 +37,17 @@ const mutations = {
   setTarget: (state, payload) => {
     console.log('setTarget', payload)
     state.canvasTarget = payload
-  }
+  },
+  startTemporaryRectangleCreation: (state) => {
+    state.temporaryCreationRectangleActive = true
+  },
+  stopTemporaryRectangleCreation: (state) => {
+    state.temporaryCreationRectangleActive = false
+  },
+  setTemporaryCreationRectangle: (state, payload) => {
+    console.log("payload", payload)
+    state.temporaryCreationRectangle = payload
+  },
   // addToPolyline: (state, newPoint) => {
   //   console.log(`addToPolyline x: ${newPoint.x} y: ${newPoint.y}`)
   //   state.canvasElements.clickedLocations.push({x: newPoint.x, y: newPoint.y, stroke: "black"});

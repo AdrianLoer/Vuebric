@@ -61,7 +61,7 @@ export default {
     // this.test()
     // Determine the width and height of the renderer wrapper element.
     console.log(this.FabricWrapper.fabricApp)
-    this.controller = new FCanvasController(this.FabricWrapper.fabricApp)
+    this.controllerWrapper.controller = new FCanvasController(this.FabricWrapper.fabricApp)
 
   }
 }

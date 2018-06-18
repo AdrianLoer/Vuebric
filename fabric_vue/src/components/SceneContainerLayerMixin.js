@@ -1,7 +1,7 @@
 export default {
   data: function () {
-    return {
-      controller: {}
+    return { 
+      controllerWrapper: {controller: {}}
     }
   },
   props: {
@@ -13,7 +13,12 @@ export default {
   methods: {
   	getController: function() {
       console.log("getController")
-      return this.controller
+      return this.controllerWrapper.controller
     }
-  }
+  },
+  provide() {
+    return {
+      controllerWrapper: this.controllerWrapper,
+    }
+  },
 }

@@ -8,4 +8,8 @@ export default class FCanvasController {
 		// console.log(this.fo)
 		return this.fo.findTarget(event, true)
 	}
+
+	posInCanvas(event) {
+		return this.fo.getPointer(event)
+	}
 }
