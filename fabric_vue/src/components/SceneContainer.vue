@@ -5,10 +5,16 @@
       
     </div-layer> -->
 
+    <!-- <director-layer>
+      // used to show passive information
+    </director-layer> -->
+
     <f-canvas :syncDimensions="true" ref="canvasLayer">
 
       <!-- <path-selector :interaction-enabled="true"></path-selector> -->
       <bb-selector :dimensions="temporaryCreationRectangle"></bb-selector>
+      <bb-render :rects="rects"></bb-render>
+      <!-- <bb-editor :dimensions=""></bb-editor> -->
 
     </f-canvas>
  
@@ -23,7 +29,8 @@ import FCanvas from '../VueF/components/FCanvas';
 import DivLayer from './DivLayer';
 
 import PathSelector from './PathSelector';
-import BbSelector from './BBSelector';
+import BbSelector from './BbSelector';
+import BbRender from './BbRender';
 
 import CreateBoxController from '../sceneInteraction/CreateBoxController'
 
@@ -32,7 +39,8 @@ export default {
     FCanvas,
     DivLayer,
     PathSelector,
-    BbSelector
+    BbSelector,
+    BbRender,
   },
   data() {
     return {
@@ -42,7 +50,8 @@ export default {
   },
   computed: {
 		...mapGetters([
-          'temporaryCreationRectangle'
+          'temporaryCreationRectangle',
+          'rects',
 	    ])
 	},
   mounted() {

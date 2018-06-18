@@ -7,13 +7,14 @@ const state = {
   canvasTarget: null,
   temporaryCreationRectangle: {left: 100, top: 100, width: 200, height: 200},
   temporaryCreationRectangleActive: false,
+  rects: [],
 }
 
 const getters = {
   canvasTarget: state => state.canvasTarget,
   temporaryCreationRectangle: state => state.temporaryCreationRectangle,
   temporaryCreationRectangleActive: state => state.temporaryCreationRectangleActive,
-
+  rects: state => state.rects,
   // why?
   // test: state => {
   //   return function() {
@@ -48,6 +49,15 @@ const mutations = {
     console.log("payload", payload)
     state.temporaryCreationRectangle = payload
   },
+  addRect: (state, payload) => {
+    state.rects.push(payload)
+  },
+  toggleEditableRectIndex: (state, payload) => {
+    state.rects[payload.at].editActive = payload.to
+  },
+  toggleHighlightedRectIndex: (state, payload) => {
+    state.rects[payload.at].highlighted = payload.to
+  }
   // addToPolyline: (state, newPoint) => {
   //   console.log(`addToPolyline x: ${newPoint.x} y: ${newPoint.y}`)
   //   state.canvasElements.clickedLocations.push({x: newPoint.x, y: newPoint.y, stroke: "black"});
@@ -55,6 +65,9 @@ const mutations = {
 }
 
 const actions = {
+  // addRect({commit}, payload) {
+  //   commit('addRect')
+  // }
   // updateRenderOrder({commit}) {
   //   commit('reverseRenderOrder')
   //   commit('createRenderOrder')
