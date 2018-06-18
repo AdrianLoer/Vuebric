@@ -73,8 +73,13 @@ export default {
 		...mapGetters([
           'canvasElements',
           'renderPosition',
-          'renderCounter'
+          'renderCounter',
+          'test'
 	    ]),
+    // ...mapGetters({
+      // canvasTarget: 'interactionState/canvasTarget',
+      // canvasTarget: 'canvasTarget',
+    // }),
     lineSegments: function() {
       let segments = [];
       for (let i = 0; i < this.canvasElements.clickedLocations.length - 1; i++) {
@@ -104,7 +109,7 @@ export default {
       'insertToPolyline',
       'reverseRenderOrder',
       'moveNode',
-      'interactionState/setMouseDown'
+      // 'interactionState/setMouseDown'
     ]),
     ...mapActions([
       'updateRenderOrder'
@@ -113,7 +118,7 @@ export default {
       return this.FabricWrapper.fabricApp.getPointer(event)
     },
     // I guess all of this should be done with canvas events
-    // just much easier to do it ourself
+    // just much easier to do it ourselfs
     checkAndMoveNode: function(node, event) {
       // console.log("checkAndMoveNode", node)
       // console.log("checkAndMoveNode", event)
@@ -175,13 +180,17 @@ export default {
   mounted() {
     console.log("component mounted")
     this.updateRenderOrder()
-    // this.test()
+    console.log(this.test)
     // Determine the width and height of the renderer wrapper element.
    
     this.EventBus.$on('mouse:down', (event) => {
-      
+
       // console.log('mouse down on canvas ', event)
-      if (event && event.target && event.target.id && event.target.id.indexOf("node") > -1) {
+      // let target = this.canvasTarget
+      let target = false
+      console.log(target)
+      if (target) {
+      // if (event && event.target && event.target.id && event.target.id.indexOf("node") > -1) {
         this['interactionState/setMouseDown']("asd")
         this.draggableNodeIndex = event.target.id.split('node-')[1];
       // } else if (event && event.target && event.target.id && event.target.id.indexOf("edge") > -1) {

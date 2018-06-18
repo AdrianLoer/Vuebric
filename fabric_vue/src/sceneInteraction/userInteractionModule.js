@@ -7,10 +7,18 @@ Vue.use(Vuex);
 const state = {
   mouseDown: false,
   boxCreationActive: false,
-  circleHover: false
+  circleHover: false,
+  canvasTarget: null,
 }
 
 const getters = {
+  // canvasTarget: state => state.canvasTarget,
+  // why?
+  // test: state => {
+  //   return function() {
+  //     console.log("test")
+  //   }
+  // }
   // renderPosition: state => {
   //   console.log(state.canvasElements.renderOrder)
   //   return state.canvasElements.renderOrder
@@ -39,7 +47,7 @@ const actions = {
 }
 
 export default new Vuex.Store({
-  namespaced: true,
+  // namespaced: true,
   state,
   getters,
   actions,
