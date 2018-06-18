@@ -1,4 +1,4 @@
-
+import Vue from 'vue/dist/vue.js';
 
 const state = {
   mouseDown: false,
@@ -7,7 +7,8 @@ const state = {
   canvasTarget: null,
   temporaryCreationRectangle: {left: 100, top: 100, width: 200, height: 200},
   temporaryCreationRectangleActive: false,
-  rects: [],
+  rects: {},
+  editMode: false,
 }
 
 const getters = {
@@ -15,6 +16,7 @@ const getters = {
   temporaryCreationRectangle: state => state.temporaryCreationRectangle,
   temporaryCreationRectangleActive: state => state.temporaryCreationRectangleActive,
   rects: state => state.rects,
+  editMode: state => state.editMode,
   // why?
   // test: state => {
   //   return function() {
@@ -31,10 +33,6 @@ const getters = {
 }
 
 const mutations = {
-  setMouseDown: (state, payload) => {
-    console.log('setMouseDown', payload)
-    state.mouseDown = payload
-  },
   setTarget: (state, payload) => {
     console.log('setTarget', payload)
     state.canvasTarget = payload
@@ -46,17 +44,22 @@ const mutations = {
     state.temporaryCreationRectangleActive = false
   },
   setTemporaryCreationRectangle: (state, payload) => {
-    console.log("payload", payload)
     state.temporaryCreationRectangle = payload
   },
   addRect: (state, payload) => {
-    state.rects.push(payload)
+    const newTID = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+    Vue.set(state.rects, newTID, payload)
+    state.rects[newTID].drawingIndex = Object.keys(state.rects).length
   },
   toggleEditableRectIndex: (state, payload) => {
-    state.rects[payload.at].editActive = payload.to
+    // const index = 
+    // state.rects[payload.at].editActive = payload.to
   },
-  toggleHighlightedRectIndex: (state, payload) => {
-    state.rects[payload.at].highlighted = payload.to
+  toggleHighlightedRectTid: (state, payload) => {
+    // state.rects[payload.at].highlighted = payload.to
+  },
+  toggleEditMode: (state, payload) => {
+    state.editMode = !state.editMode
   }
   // addToPolyline: (state, newPoint) => {
   //   console.log(`addToPolyline x: ${newPoint.x} y: ${newPoint.y}`)

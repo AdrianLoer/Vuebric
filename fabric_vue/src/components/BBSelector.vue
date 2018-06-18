@@ -9,7 +9,7 @@
       :objectCaching="false"
       :strokeWidth="2"
       :drawingIndex="10000"
-      :fill="'rgba(200,240,200,0.5)'"
+      :fill="'rgba(100,140,100,0.5)'"
     ></f-rect>
 <!--     <f-circle
       v-for="(node, index) in canvasElements.clickedLocations"
@@ -94,7 +94,6 @@ export default {
     ...mapActions([
     ]),
     posInCanvas: function(event) {
-      console.log(this.controllerWrapper)
       return this.controllerWrapper.controller.posInCanvas(event)
     },
 
@@ -105,7 +104,6 @@ export default {
     // Determine the width and height of the renderer wrapper element.
     var self = this
     this.EventBus.$on('mouse:down', (e) => {
-      console.log("mouse:down", e)
       const pointer = self.posInCanvas(e)
       // console.log(pointer)
       self.setTemporaryCreationRectangle({
@@ -130,7 +128,6 @@ export default {
     })
 
     this.EventBus.$on('mouse:up', (e) => {
-      console.log("mouse:up", e)
       const pointer = self.posInCanvas(e)
       // console.log(pointer)
       self.stopTemporaryRectangleCreation()

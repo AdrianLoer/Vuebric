@@ -11,33 +11,33 @@ export default {
     }
   },
   props: {
-  	id: {
-		default: "none",
-		type: String
+  	tid: {
+  		default: "none",
+  		type: String
   	},
   	left: {
-		default: 0,
-		type: Number
+  		default: 0,
+  		type: Number
     },
     top: {
-		default: 0,
-		type: Number
+  		default: 0,
+  		type: Number
     },
     width: {
-		default: 0,
-		type: Number
+  		default: 0,
+  		type: Number
     },
     height: {
-		default: 0,
-		type: Number
+  		default: 0,
+  		type: Number
     },
     fill: {
-		default: "purple",
-		type: String
+  		default: "purple",
+  		type: String
     },
     stroke: {
-		default: "black",
-		type: String
+  		default: "black",
+  		type: String
     },
     selectable: {
     	default: false,
@@ -121,7 +121,7 @@ export default {
   },
   methods: {
   	afterCreateObject: function() {
-		this.fObj.id = this.id
+		this.fObj.tid = this.tid
   	},
   	mouseMoveHandler: function(event) { 
   		console.log("mouseMove", event)

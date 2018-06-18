@@ -1,17 +1,16 @@
 <template>
   <div>
-    <f-rect
-      v-for="(rect, key) in rects"
-      :tid="key"
-      :left="rect.left"
+<!--     <f-rect 
+      v-for="(rect, index) in rects"
+      :left="rect.left" 
       :top="rect.top" 
       :width="rect.width" 
       :height="rect.height" 
       :objectCaching="false"
       :strokeWidth="2"
-      :drawingIndex="100 + rect.drawingIndex"
-      :fill="rect.shouldBeHighlighted ? 'rgba(200,240,200,0.9)' : 'rgba(200,240,200,0.5)'"
-    ></f-rect>
+      :drawingIndex="100 + index"
+      :fill="'rgba(200,240,200,0.5)'"
+    ></f-rect> -->
 <!--     <f-circle
       v-for="(node, index) in canvasElements.clickedLocations"
       :id="`node-${index}`"
@@ -31,7 +30,7 @@
     </f-line>
  -->
 
-    {{rects}}
+    <!-- {{rects}} -->
 
   </div>
 </template>
@@ -54,22 +53,23 @@ export default {
   },
   props: {
     rects: {
-      default: () => {},
-      type: Object
+      default: () => [],
+      type: Array
     },
   },
   data() {
     return {
-      
     }
   },
   computed: {
 		...mapGetters([
-      'temporaryCreationRectangleActive'
-    ]),
-    ...mapGetters({
-      canvasTarget: 'canvasTarget',
-    }),
+          'temporaryCreationRectangleActive'
+	    ]),
+    // ...mapGetters({
+      // canvasTarget: 'interactionState/canvasTarget',
+      // canvasTarget: 'canvasTarget',
+    // }),
+   
 	},
   methods: {
     ...mapMutations([
@@ -81,27 +81,10 @@ export default {
       'startTemporaryRectangleCreation',
       'stopTemporaryRectangleCreation',
     ]),
+
   },
   mounted() {
-    console.log("component mounted")
-    // console.log(this.test)
-    // Determine the width and height of the renderer wrapper element.
-    // var self = this
-    // this.EventBus.$on('mouse:down', (e) => {
-    //   console.log("mouse:down", e)
-    //   const pointer = self.posInCanvas(e)
-    //   // console.log(pointer)
-    //   self.setTemporaryCreationRectangle({
-    //     left: pointer.x,
-    //     top: pointer.y,
-    //     width: 0,
-    //     height: 0,
-    //   })
-    //   self.startTemporaryRectangleCreation()
-    // })
-
     this.EventBus.$on('mouse:move', (e) => {
-
       // console.log("mouse:move", e)
       // const pointer = self.posInCanvas(e)
       // // console.log(pointer)
@@ -112,13 +95,6 @@ export default {
       //   height: pointer.y - self.dimensions.top,
       // })
     })
-
-    // this.EventBus.$on('mouse:up', (e) => {
-    //   console.log("mouse:up", e)
-    //   const pointer = self.posInCanvas(e)
-    //   // console.log(pointer)
-    //   self.stopTemporaryRectangleCreation()
-    // })
   },
 }
 </script>

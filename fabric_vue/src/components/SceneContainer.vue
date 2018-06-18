@@ -1,5 +1,5 @@
 <template>
-  <div class="scene-container">
+  <div class="scene-container" :class="{editMode: editMode}">
 <!-- 
     <div-layer :syncDimensions="true" ref="test">
       
@@ -12,12 +12,16 @@
     <f-canvas :syncDimensions="true" ref="canvasLayer">
 
       <!-- <path-selector :interaction-enabled="true"></path-selector> -->
-      <bb-selector :dimensions="temporaryCreationRectangle"></bb-selector>
-      <bb-render :rects="rects"></bb-render>
-      <!-- <bb-editor :dimensions=""></bb-editor> -->
+      <bb-selector :dimensions="temporaryCreationRectangle" v-if="!editMode"></bb-selector>
 
+      <!-- <bb-edit-selector :rects="rects"></bb-edit-selector> -->
+
+      <bb-render :rects="rects"></bb-render>
+
+      <!-- <bb-editor :dimensions=""></bb-editor> -->
+      editMode: {{editMode}}
     </f-canvas>
- 
+  
   </div>
 </template>
 
@@ -30,6 +34,7 @@ import DivLayer from './DivLayer';
 
 import PathSelector from './PathSelector';
 import BbSelector from './BbSelector';
+import BbEditSelector from './BbRender';
 import BbRender from './BbRender';
 
 import CreateBoxController from '../sceneInteraction/CreateBoxController'
@@ -40,6 +45,7 @@ export default {
     DivLayer,
     PathSelector,
     BbSelector,
+    BbEditSelector,
     BbRender,
   },
   data() {
@@ -48,10 +54,16 @@ export default {
      EventBus: new Vue()
     }
   },
+  watch: {
+    editMode: function(newVal) {
+
+    }
+  },
   computed: {
 		...mapGetters([
           'temporaryCreationRectangle',
           'rects',
+          'editMode'
 	    ])
 	},
   mounted() {
@@ -83,13 +95,20 @@ export default {
       self.EventBus.$emit('mouse:up', event)
     }, true);
 
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'e') {
+        console.log('keydown e debug, refresh page')
+        self.toggleEditMode()
+      }
+    });
 
 
 
   },
   methods: {
     ...mapMutations([
-      'setTarget'
+      'setTarget',
+      'toggleEditMode'
     ]),
     findTargetForCanvas: function(event) {
       return this.$refs.canvasLayer.getController().findTarget(event)
@@ -115,8 +134,12 @@ canvas {
 .scene-container {
   width: 50vw;
   height: 50vh;
-  border: 10px solid purple;
+  border: 10px solid blue;
   overflow: hidden;
   margin-top: 200px;
+}
+
+.scene-container.editMode {
+  border-color: purple;
 }
 </style>

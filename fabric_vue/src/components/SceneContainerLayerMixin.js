@@ -12,7 +12,6 @@ export default {
   },
   methods: {
   	getController: function() {
-      console.log("getController")
       return this.controllerWrapper.controller
     }
   },
