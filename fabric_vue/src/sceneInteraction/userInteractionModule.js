@@ -14,11 +14,11 @@ const state = {
 const getters = {
   // canvasTarget: state => state.canvasTarget,
   // why?
-  // test: state => {
-  //   return function() {
-  //     console.log("test")
-  //   }
-  // }
+  test: state => {
+    return function() {
+      console.log("test")
+    }
+  }
   // renderPosition: state => {
   //   console.log(state.canvasElements.renderOrder)
   //   return state.canvasElements.renderOrder
