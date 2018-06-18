@@ -74,7 +74,8 @@ export default {
           'canvasElements',
           'renderPosition',
           'renderCounter',
-          'test'
+          'test',
+          'canvasTarget'
 	    ]),
     // ...mapGetters({
       // canvasTarget: 'interactionState/canvasTarget',
@@ -180,18 +181,18 @@ export default {
   mounted() {
     console.log("component mounted")
     this.updateRenderOrder()
-    console.log(this.test)
+    // console.log(this.test)
     // Determine the width and height of the renderer wrapper element.
    
     this.EventBus.$on('mouse:down', (event) => {
 
       // console.log('mouse down on canvas ', event)
-      // let target = this.canvasTarget
-      let target = false
-      console.log(target)
+      let target = this.canvasTarget
+      // let target = false
+      console.log("target", target)
       if (target) {
       // if (event && event.target && event.target.id && event.target.id.indexOf("node") > -1) {
-        this['interactionState/setMouseDown']("asd")
+        // this['interactionState/setMouseDown']("asd")
         this.draggableNodeIndex = event.target.id.split('node-')[1];
       // } else if (event && event.target && event.target.id && event.target.id.indexOf("edge") > -1) {
         // console.log('clicked on vertex')
@@ -216,7 +217,7 @@ export default {
     })
 
     this.EventBus.$on('mouse:move', (event) => {
-      console.log("move")
+      // console.log("move")
       // if (this.draggableNodeIndex) {
       //   const pointer = this.getPointer(event.e)
       //   this.moveNode({index: this.draggableNodeIndex, pointer: pointer})

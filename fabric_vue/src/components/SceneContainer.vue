@@ -49,6 +49,7 @@ export default {
       event.stopPropagation()
       let target = self.$refs.canvasLayer.getController().findTarget(event)
       console.log("target", target)
+      self.setTarget(target)
       self.EventBus.$emit('mouse:down', event)
       console.log("mousedown container", event)
       // self.$refs.test.mousemove(event)
@@ -72,10 +73,9 @@ export default {
 
   },
   methods: {
-    // ...mapMutations([
-      // 'addToPolyline'
-    // ])
-    CreateBoxController
+    ...mapMutations([
+      'setTarget'
+    ])
   },
   provide() {
     return {

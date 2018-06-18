@@ -1,8 +1,4 @@
-// import Vue from "vue";
-import Vue from 'vue/dist/vue.js';
-import Vuex from "vuex";
 
-Vue.use(Vuex);
 
 const state = {
   mouseDown: false,
@@ -12,13 +8,13 @@ const state = {
 }
 
 const getters = {
-  // canvasTarget: state => state.canvasTarget,
+  canvasTarget: state => state.canvasTarget,
   // why?
-  test: state => {
-    return function() {
-      console.log("test")
-    }
-  }
+  // test: state => {
+  //   return function() {
+  //     console.log("test")
+  //   }
+  // }
   // renderPosition: state => {
   //   console.log(state.canvasElements.renderOrder)
   //   return state.canvasElements.renderOrder
@@ -32,6 +28,10 @@ const mutations = {
   setMouseDown: (state, payload) => {
     console.log('setMouseDown', payload)
     state.mouseDown = payload
+  },
+  setTarget: (state, payload) => {
+    console.log('setTarget', payload)
+    state.canvasTarget = payload
   }
   // addToPolyline: (state, newPoint) => {
   //   console.log(`addToPolyline x: ${newPoint.x} y: ${newPoint.y}`)
@@ -46,10 +46,10 @@ const actions = {
   // },
 }
 
-export default new Vuex.Store({
+export default {
   // namespaced: true,
   state,
   getters,
   actions,
   mutations
-})
+}
