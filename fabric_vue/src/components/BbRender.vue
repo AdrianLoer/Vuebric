@@ -32,7 +32,7 @@
     </f-line>
  -->
 
-    {{rects}}
+    <!-- {{rects}} -->
 
   </div>
 </template>
@@ -102,7 +102,7 @@ export default {
     //   self.startTemporaryRectangleCreation()
     // })
 
-    var self = this
+    let self = this
     this.EventBus.$on('mouse:move', (e) => {
 
       if (self.canvasTarget) {

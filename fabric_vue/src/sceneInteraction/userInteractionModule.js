@@ -9,6 +9,8 @@ const state = {
   temporaryCreationRectangleActive: false,
   rects: {},
   editMode: false,
+  rectToResize: undefined,
+  rectSideToResize: undefined,
 }
 
 const getters = {
@@ -17,6 +19,8 @@ const getters = {
   temporaryCreationRectangleActive: state => state.temporaryCreationRectangleActive,
   rects: state => state.rects,
   editMode: state => state.editMode,
+  rectToResize: state => state.rectToResize,
+  rectSideToResize: state => state.rectSideToResize,
   // why?
   // test: state => {
   //   return function() {
@@ -73,7 +77,32 @@ const mutations = {
   },
   toggleEditMode: (state, payload) => {
     state.editMode = !state.editMode
-  }
+  },
+  resizeRect: (state, payload) => {
+    // console.log(payload)
+    // Vue.set(state.rects[payload.tid], payload.direction, payload.value)
+    const sideToVal = {
+      up: 'top',
+      right: 'width',
+      down: 'height',
+      left: 'left'
+    }
+    Vue.set(state.rectToResize, sideToVal[state.rectSideToResize], payload)
+  },
+  setRectToResize: (state, payload) => {
+    console.log("setRectToResize")
+    state.rectToResize = state.rects[payload]
+  },
+  setRectSideToResize: (state, payload) => {
+    console.log("setRectSideToResize")
+    state.rectSideToResize = payload
+  },
+  unsetRectToResize: (state, payload) => {
+    state.rectToResize = undefined
+  },
+  unsetRectSideToResize: (state, payload) => {
+    state.rectSideToResize = undefined
+  },
   // addToPolyline: (state, newPoint) => {
   //   console.log(`addToPolyline x: ${newPoint.x} y: ${newPoint.y}`)
   //   state.canvasElements.clickedLocations.push({x: newPoint.x, y: newPoint.y, stroke: "black"});

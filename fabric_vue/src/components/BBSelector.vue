@@ -30,9 +30,10 @@
     </f-line>
  -->
 
+ <div class="overlay">
     {{temporaryCreationRectangleActive}}
     {{dimensions}}
-
+  </div>
   </div>
 </template>
 
@@ -72,7 +73,8 @@ export default {
           'test',
           'canvasTarget',
           'temporaryCreationRectangle',
-          'temporaryCreationRectangleActive'
+          'temporaryCreationRectangleActive',
+          'editMode'
 	    ]),
     // ...mapGetters({
       // canvasTarget: 'interactionState/canvasTarget',
@@ -104,6 +106,7 @@ export default {
     // Determine the width and height of the renderer wrapper element.
     var self = this
     this.EventBus.$on('mouse:down', (e) => {
+      if (self.editMode) return
       const pointer = self.posInCanvas(e)
       // console.log(pointer)
       self.setTemporaryCreationRectangle({
@@ -116,6 +119,7 @@ export default {
     })
 
     this.EventBus.$on('mouse:move', (e) => {
+      if (self.editMode) return
       // console.log("mouse:move", e)
       const pointer = self.posInCanvas(e)
       // console.log(pointer)
@@ -128,12 +132,16 @@ export default {
     })
 
     this.EventBus.$on('mouse:up', (e) => {
+      if (self.editMode) return
       const pointer = self.posInCanvas(e)
       // console.log(pointer)
       self.stopTemporaryRectangleCreation()
       self.addRect(self.temporaryCreationRectangle)
     })
   },
+  beforeDestroy() {
+    // need to off events in here
+  }
 }
 </script>
 
@@ -161,5 +169,9 @@ canvas {
 
 .selection-status-header.active {
   background-color: red;
+}
+
+.overlay {
+  position: absolute;
 }
 </style>

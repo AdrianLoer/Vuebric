@@ -14,7 +14,7 @@
       <!-- <path-selector :interaction-enabled="true"></path-selector> -->
       <bb-selector :dimensions="temporaryCreationRectangle" v-if="!editMode"></bb-selector>
 
-      <!-- <bb-edit-selector :rects="rects"></bb-edit-selector> -->
+      <bb-edit-selector :rects="rects" v-if="editMode"></bb-edit-selector>
 
       <bb-render :rects="rects"></bb-render>
 
@@ -34,7 +34,7 @@ import DivLayer from './DivLayer';
 
 import PathSelector from './PathSelector';
 import BbSelector from './BbSelector';
-import BbEditSelector from './BbRender';
+import BbEditSelector from './BbEditSelector';
 import BbRender from './BbRender';
 
 import CreateBoxController from '../sceneInteraction/CreateBoxController'
@@ -68,7 +68,7 @@ export default {
 	},
   mounted() {
     console.log("scene container mounted", this.$el)
-    var self = this
+    let self = this
     this.$el.addEventListener('mousedown', function(event) {
       event.stopPropagation()
       const target = self.findTargetForCanvas(event)

@@ -36,7 +36,7 @@ export default {
       this.fObj = new fabric.Line(this.lineCoords, {
         // left: this.left,
         // top: this.top,
-        strokeWidth: 2,
+        strokeWidth: this.strokeWidth,
         fill: this.fill,
         stroke: this.stroke,
         originX: 'center',
